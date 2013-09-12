@@ -1601,7 +1601,7 @@ public class TContent implements IFuelHandler
 
         String[] names = new String[] { "Molten Iron", "Molten Gold", "Molten Copper", "Molten Tin", "Molten Aluminum", "Molten Cobalt", "Molten Ardite", "Molten Bronze", "Molten Aluminum Brass",
                 "Molten Manyullyn", "Molten Alumite", "Molten Obsidian", "Molten Steel", "Molten Glass", "Seared Stone", "Molten Emerald", "Blood", "nickel.molten", "lead.molten", "silver.molten",
-                "platinum.molten", "invar.molten", "electrum.molten" };
+                "platinum.molten", "invar.molten", "electrum.molten", "Molten Ender" };
         liquidIcons = new LiquidStack[names.length];
         liquidNames = new String[names.length];
         for (int iter = 0; iter < names.length; iter++)

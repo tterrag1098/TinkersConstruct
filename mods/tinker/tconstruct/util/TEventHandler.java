@@ -459,8 +459,11 @@ public class TEventHandler
             if (!player.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
             {
                 TPlayerStats stats = TConstruct.playerTracker.getPlayerStats(player.username);
-                stats.armor.dropItems();
-                stats.knapsack.dropItems();
+                if (stats != null)
+                {
+                    stats.armor.dropItems();
+                    stats.knapsack.dropItems();
+                }
             }
             //}
         }
@@ -531,7 +534,7 @@ public class TEventHandler
                 Crystallinity.theftValue.remove(coord);
             }
         }
-        
+
         if (Crystallinity.charge.containsKey(coord))
         {
             CrystalValues crystal = Crystallinity.charge.get(coord);
