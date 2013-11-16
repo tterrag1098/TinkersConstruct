@@ -1,9 +1,11 @@
 package tconstruct.library.component;
 
 import java.util.*;
+
 import net.minecraft.block.Block;
 import net.minecraft.nbt.*;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 import tconstruct.TConstruct;
 import tconstruct.library.util.*;
 
@@ -15,6 +17,13 @@ public class TankLayerScan extends LogicComponent
     protected CoordTuple masterCoord;
 
     protected boolean completeStructure;
+    
+    protected int minX;
+    protected int minY;
+    protected int minZ;
+    protected int maxX;
+    protected int maxY;
+    protected int maxZ;
 
     protected int bricks = 0;
     protected int airBlocks = 0;
@@ -57,7 +66,7 @@ public class TankLayerScan extends LogicComponent
         boolean validAir = false;
         //Check for air space in front of and behind the structure
         byte dir = getDirection();
-        switch (getDirection())
+        switch (dir)
         {
         case 2: // +z
         case 3: // -z
@@ -85,7 +94,8 @@ public class TankLayerScan extends LogicComponent
             zPos = 1;
 
         returnStone = new CoordTuple(master.xCoord - xPos, master.yCoord, master.zCoord - zPos);
-        if (initialRecurseLayer(master.xCoord + xPos, master.yCoord, master.zCoord + zPos))
+//        if (initialRecurseLayer(master.xCoord + xPos, master.yCoord, master.zCoord + zPos))
+        if (initialLayerScan(master.xCoord, master.yCoord, master.zCoord, ForgeDirection.OPPOSITES[dir]))
         {
             xPos = 0;
             zPos = 0;
@@ -104,13 +114,39 @@ public class TankLayerScan extends LogicComponent
                 xPos = -1;
                 break;
             }
+            
+            minX = master.xCoord;
+            minY = master.yCoord;
+            minZ = master.zCoord;
+            
+            maxX = minX;
+            maxY = minY;
+            maxZ = minZ;
+            
+            for (CoordTuple coord : blockCoords)
+            {
+                if (coord.x < minX)
+                    minX = coord.x;
+                if (coord.y < minY)
+                    minY = coord.y;
+                if (coord.z < minZ)
+                    minZ = coord.z;
+                
+                if (coord.x > maxX)
+                    maxX = coord.x;
+                if (coord.y > maxY)
+                    maxY = coord.y;
+                if (coord.z > maxZ)
+                    maxZ = coord.z;
+            }
             if (!world.isRemote && debug)
                 TConstruct.logger.info("Bricks in recursion: " + blockCoords.size());
             blockCoords.clear();
             bricks = 0;
 
             //Does the actual adding of blocks in the ring
-            boolean sealed = floodTest(master.xCoord + xPos, master.yCoord, master.zCoord + zPos);
+//            boolean sealed = floodTest(master.xCoord + xPos, master.yCoord, master.zCoord + zPos);
+            boolean sealed = floodScanTest(master.xCoord + xPos, master.yCoord, master.zCoord + zPos);
             if (!world.isRemote && debug)
             {
                 TConstruct.logger.info("Air in ring: " + airBlocks);
@@ -237,6 +273,161 @@ public class TankLayerScan extends LogicComponent
 
         return false;
     }
+    
+    protected boolean initialLayerScan (int x, int y, int z, int dir)
+    {
+        Set<CoordTuple> scanned = new HashSet<CoordTuple>();
+        int floorLevel = y;
+        int minX, maxX = x;
+        int minZ, maxZ = z;
+        int scanX, scanY, scanZ = 0;
+        int walkDir, scanDir = 0;
+        
+        CoordTuple currentCoord;
+        CoordTuple lastCoord;
+        
+        blockCoords.clear();
+        
+        // First Check: Inside floor
+        currentCoord = new CoordTuple(x + dirOffsetX(dir), y, z + dirOffsetZ(dir));
+        scanned.add(currentCoord);
+        if (checkAir(currentCoord.x, currentCoord.y, currentCoord.z))
+        {
+            // Check the floor for air||structure
+            scanY = currentCoord.y;
+            while (floorLevel == y)
+            {
+                scanY = currentCoord.y - 1;
+                
+                // Void age sanity check
+                if (scanY <= 1)
+                    return false;
+                
+                if (!checkAir(currentCoord.x, scanY, currentCoord.z))
+                {
+                    if (isValidBlock(currentCoord.x, scanY, currentCoord.z))
+                    {
+                        floorLevel = scanY;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        
+        // Turn right
+        walkDir = ForgeDirection.ROTATION_MATRIX[1][dir];
+        
+        currentCoord = new CoordTuple(currentCoord.x + dirOffsetX(walkDir), y, currentCoord.z + dirOffsetZ(walkDir));
+        
+        while (currentCoord != null)
+        {
+            // Did we walk into a wall?
+            if (isValidBlock(currentCoord.x, y, currentCoord.z))
+            {
+                // We dun did dat
+                blockCoords.add(currentCoord);
+                
+                //While we're here, let's check if we have anything useful here
+                if (currentCoord.x == x && currentCoord.z == z)
+                {
+                    // We done did it! We walked right into the controller
+                    return true;
+                }                
+                
+                // Step back
+                currentCoord = new CoordTuple(currentCoord.x + dirOffsetX(ForgeDirection.OPPOSITES[walkDir]), y, currentCoord.z + dirOffsetZ(ForgeDirection.OPPOSITES[walkDir]));
+                
+                // Turn left!
+                walkDir = ForgeDirection.ROTATION_MATRIX[0][walkDir];
+                
+
+                // No? Let's start over then! Step forward
+                currentCoord = new CoordTuple(currentCoord.x + dirOffsetX(walkDir), y, currentCoord.z + dirOffsetZ(walkDir));
+                continue;
+            }
+            
+            // Floor check
+            if (!isValidBlock(currentCoord.x, floorLevel, currentCoord.z))
+            {
+                return false;
+            }
+            // Check right-hand wall
+            scanDir = ForgeDirection.ROTATION_MATRIX[1][walkDir];
+            scanX = currentCoord.x + dirOffsetX(scanDir);
+            scanZ = currentCoord.z + dirOffsetZ(scanDir);
+            if (!isValidBlock(scanX, y, scanZ))
+            {
+                if (checkAir(scanX, y, scanZ))
+                {
+                    // Wall is air, turn right.
+                    walkDir = scanDir;
+                    scanned.add(currentCoord);
+                    currentCoord = new CoordTuple(scanX + dirOffsetX(walkDir), y, scanZ + dirOffsetZ(walkDir));
+                    continue;
+                }
+                else
+                {
+                    // Wall is...something? No no no, something about this is just all wrong
+                    return false;
+                }
+            }
+            else
+            {
+                // Wall is wall! Take a step forward
+                scanned.add(currentCoord);
+                blockCoords.add(new CoordTuple(scanX, y, scanZ));
+                currentCoord = new CoordTuple(currentCoord.x + dirOffsetX(walkDir), y, currentCoord.z + dirOffsetZ(walkDir));
+                
+                // Are we there yet?
+                if (scanX == x && scanZ == z)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    private static CoordTuple[] getXZNeighbors (CoordTuple coord)
+    {
+        return new CoordTuple[]
+                {
+                    new CoordTuple(coord.x - 1, coord.y, coord.z    ),
+                    new CoordTuple(coord.x    , coord.y, coord.z - 1),
+                    new CoordTuple(coord.x    , coord.y, coord.z + 1),
+                    new CoordTuple(coord.x + 1, coord.y, coord.z    )
+                };
+    }
+    
+    private static int dirOffsetX (int dir)
+    {
+        switch (dir)
+        {
+
+        case 4:
+            return -1;
+        case 5:
+            return 1;
+        }
+        
+        return 0;
+    }
+    
+    private static int dirOffsetZ (int dir)
+    {
+        switch (dir)
+        {
+        case 2:
+            return 1;
+        case 3:
+            return -1;
+        }
+        return 0;
+    }
 
     protected boolean isValidBlock (int x, int y, int z)
     {
@@ -274,6 +465,47 @@ public class TankLayerScan extends LogicComponent
                 }
             }
         }
+        return true;
+    }
+    
+    // Pass first air block (adjacent to controller)
+    protected boolean floodScanTest (int x, int y, int z)
+    {
+//        Set<CoordTuple> airBlocks = new HashSet<CoordTuple>();
+        ArrayDeque<CoordTuple> scan = new ArrayDeque<CoordTuple>();
+        
+        CoordTuple scanCoord;
+        scan.push(new CoordTuple(x, y, z));
+        
+        while (!scan.isEmpty())
+        {
+            scanCoord = scan.pop();
+            
+            if (scanCoord.x < minX || scanCoord.y < minY || scanCoord.z < minZ || scanCoord.x > maxX || scanCoord.y > maxY || scanCoord.z > maxZ)
+            {
+                return false;
+            }
+            
+            if (airCoords.contains(scanCoord))
+            {
+                continue;
+            }
+            if (checkAir(scanCoord.x, scanCoord.y, scanCoord.z))
+            {
+                airCoords.add(scanCoord);
+                ++airBlocks;
+                scan.addAll(Arrays.asList(getXZNeighbors(scanCoord)));
+            }
+            else
+            {
+                if (!blockCoords.contains(scanCoord))
+                {
+                    ++bricks;
+                    blockCoords.add(scanCoord);
+                }
+            }
+        }
+        
         return true;
     }
 
@@ -415,10 +647,16 @@ public class TankLayerScan extends LogicComponent
             if (servant instanceof IServantLogic)
             {
                 canPass = ((IServantLogic) servant).verifyMaster(imaster, world, master.xCoord, master.yCoord, master.zCoord);
-                if (canPass)
-                    continue;
             }
-            if (!canPass)
+            else
+            {
+                canPass = (coord.x > minX && coord.x < maxX && coord.z > minZ && coord.z < maxZ) && (checkAir(coord.x, coord.y, coord.z) || isValidBlock(coord.x, coord.y, coord.z));
+            }
+            if (canPass)
+            {
+                height = Math.max(height, coord.y);
+            }
+            else
             {
                 System.out.println("Coord: " + coord);
                 height = coord.y;
@@ -428,7 +666,7 @@ public class TankLayerScan extends LogicComponent
 
         if (height != -1)
         {
-            if (height <= master.yCoord)
+            if (height < master.yCoord)
                 invalidateStructure();
             else
                 invalidateBlocksAbove(height);
