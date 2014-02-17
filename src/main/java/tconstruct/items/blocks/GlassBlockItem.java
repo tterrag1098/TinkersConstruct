@@ -10,7 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class GlassBlockItem extends MultiItemBlock
 {
-    public static final String blockTypes[] = { "pure" };//, "soul", "soul.pure" };
+    public static final String blockTypes[] = { "pure" };// , "soul",
+                                                         // "soul.pure" };
 
     public GlassBlockItem(Block b)
     {
@@ -19,6 +20,7 @@ public class GlassBlockItem extends MultiItemBlock
         setHasSubtypes(true);
     }
 
+    @Override
     public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4)
     {
         if (stack.hasTagCompound() && stack.getItemDamage() == 0)

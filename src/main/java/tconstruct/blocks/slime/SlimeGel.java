@@ -25,16 +25,19 @@ public class SlimeGel extends TConstructBlock
         setCreativeTab(TConstructRegistry.blockTab);
     }
 
+    @Override
     public boolean getEnableStats ()
     {
         return false;
     }
 
+    @Override
     public int getMobilityFlag ()
     {
         return 0;
     }
 
+    @Override
     public int damageDropped (int meta)
     {
         return meta;
@@ -73,7 +76,7 @@ public class SlimeGel extends TConstructBlock
     {
         par3List.add(new ItemStack(b, 1, 0));
         par3List.add(new ItemStack(b, 1, 1));
-        //par3List.add(new ItemStack(par1, 1, 2));
+        // par3List.add(new ItemStack(par1, 1, 2));
     }
 
     public boolean canSustainLeaves (World world, int x, int y, int z)

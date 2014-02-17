@@ -24,7 +24,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SlimeGrass extends MantleBlock
 {
-    public String[] textureNames = { "slimegrass_green_top", "slimedirt_blue", "slimegrass_green_blue_side", "slimegrass_green_dirt_side" };//green, purple
+    public String[] textureNames = { "slimegrass_green_top", "slimedirt_blue", "slimegrass_green_blue_side", "slimegrass_green_dirt_side" };// green,
+                                                                                                                                            // purple
     public IIcon[] icons;
 
     public SlimeGrass()
@@ -38,11 +39,11 @@ public class SlimeGrass extends MantleBlock
     @Override
     public int damageDropped (int meta)
     {
-        if (meta == 1) //dirt
+        if (meta == 1) // dirt
             return 0;
 
         else
-            //slime dirt
+            // slime dirt
             return 5;
     }
 
@@ -95,11 +96,13 @@ public class SlimeGrass extends MantleBlock
         return plantType == EnumPlantType.Plains && plant.getPlant(world, x, y + 1, z) != Blocks.tallgrass;
     }
 
+    @Override
     public void onPlantGrow (World world, int x, int y, int z, int sourceX, int sourceY, int sourceZ)
     {
         world.setBlock(x, y, z, TRepo.craftedSoil, 5, 3);
     }
 
+    @Override
     public void updateTick (World par1World, int par2, int par3, int par4, Random par5Random)
     {
         if (!par1World.isRemote)

@@ -127,6 +127,7 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
         }
     }
 
+    @Override
     public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z)
     {
         int l = world.getBlockMetadata(x, y, z);
@@ -199,8 +200,9 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
     @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
-        /*if (world.isRemote)
-            return false;*/
+        /*
+         * if (world.isRemote) return false;
+         */
 
         int meta = world.getBlockMetadata(x, y, z);
         if (meta >= 12)
@@ -230,11 +232,13 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
         return false;
     }
 
+    @Override
     public int getRenderType ()
     {
         return OreberryRender.model;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered (IBlockAccess iblockaccess, int x, int y, int z, int meta)
     {
@@ -258,7 +262,8 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
             return;
         }
 
-        if (random1.nextInt(20) == 0)// && world.getBlockLightValue(x, y, z) <= 8)
+        if (random1.nextInt(20) == 0)// && world.getBlockLightValue(x, y, z) <=
+                                     // 8)
         {
             if (world.getFullBlockLightValue(x, y, z) < 10)
             {
@@ -268,10 +273,10 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
                     world.setBlock(x, y, z, this, meta + 4, 3);
                 }
             }
-            /*else if (meta < 8)
-            {
-            	world.setBlock(x, y, z, blockID, meta + 4, 3);
-            }*/
+            /*
+             * else if (meta < 8) { world.setBlock(x, y, z, blockID, meta + 4,
+             * 3); }
+             */
         }
     }
 
@@ -282,6 +287,7 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
         return super.canSustainPlant(world, x, y, z, direction, plant);
     }
 
+    @Override
     public boolean canPlaceBlockAt (World world, int x, int y, int z)
     {
         if (world.getFullBlockLightValue(x, y, z) < 13)
@@ -290,7 +296,8 @@ public class OreberryBush extends BlockLeavesBase implements IPlantable
     }
 
     /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
+     * returns a list of items with the same ID, but different meta (eg: dye
+     * returns 16 items)
      */
     @SideOnly(Side.CLIENT)
     @Override

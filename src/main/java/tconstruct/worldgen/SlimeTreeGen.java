@@ -29,6 +29,7 @@ public class SlimeTreeGen extends WorldGenerator
         this.seekHeight = !notify;
     }
 
+    @Override
     public boolean generate (World world, Random random, int xPos, int yPos, int zPos)
     {
         int height = random.nextInt(this.treeHeightRange) + this.minTreeHeight;
@@ -116,7 +117,7 @@ public class SlimeTreeGen extends WorldGenerator
         this.setBlockAndMetadata(world, xPos - 1, yPos + height - 3, zPos + 1, Blocks.air, 0);
         this.setBlockAndMetadata(world, xPos - 1, yPos + height - 3, zPos - 1, Blocks.air, 0);
 
-        //Drippers
+        // Drippers
         this.setBlockAndMetadata(world, xPos + 3, yPos + height - 4, zPos, TRepo.slimeLeaves, this.metaLeaves);
         this.setBlockAndMetadata(world, xPos - 3, yPos + height - 4, zPos, TRepo.slimeLeaves, this.metaLeaves);
         this.setBlockAndMetadata(world, xPos, yPos + height - 4, zPos - 3, TRepo.slimeLeaves, this.metaLeaves);

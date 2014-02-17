@@ -60,6 +60,7 @@ public class MultiBrick extends TConstructBlock
         }
     }
 
+    @Override
     public float getExplosionResistance (Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
     {
         int meta = world.getBlockMetadata(x, y, z);
@@ -110,7 +111,7 @@ public class MultiBrick extends TConstructBlock
         }
     }
 
-    //TODO getCollisionBoundingBoxFromPool
+    // TODO getCollisionBoundingBoxFromPool
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z)
     {
@@ -120,11 +121,9 @@ public class MultiBrick extends TConstructBlock
         return super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
-    /*@Override
-    public int getRenderType ()
-    {
-        return BrickRender.model;
-    }*/
+    /*
+     * @Override public int getRenderType () { return BrickRender.model; }
+     */
 
     @Override
     public boolean isNormalCube (IBlockAccess world, int x, int y, int z)

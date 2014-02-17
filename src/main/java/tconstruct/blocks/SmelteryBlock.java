@@ -27,6 +27,8 @@ import tconstruct.blocks.logic.SmelteryLogic;
 import tconstruct.client.block.SmelteryRender;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.util.config.PHConstruct;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SmelteryBlock extends InventoryBlock
 {
@@ -71,6 +73,8 @@ public class SmelteryBlock extends InventoryBlock
         return textureNames;
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
         if (meta < 2)
@@ -91,12 +95,14 @@ public class SmelteryBlock extends InventoryBlock
         return icons[3 + meta];
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side)
     {
         TileEntity logic = world.getTileEntity(x, y, z);
         short direction = (logic instanceof IFacingLogic) ? ((IFacingLogic) logic).getRenderDirection() : 0;
         int meta = world.getBlockMetadata(x, y, z);
-        if (meta == 0) //Smeltery
+        if (meta == 0) // Smeltery
         {
             if (side == direction)
             {
@@ -114,7 +120,7 @@ public class SmelteryBlock extends InventoryBlock
                 return icons[0];
             }
         }
-        if (meta == 1) //Drain
+        if (meta == 1) // Drain
         {
             if (side == direction)
                 return icons[5];
@@ -136,17 +142,17 @@ public class SmelteryBlock extends InventoryBlock
 
     }
 
-    /*@Override
-    public int getRenderBlockPass()
-    {
-        return 1;
-    }*/
+    /*
+     * @Override public int getRenderBlockPass() { return 1; }
+     */
 
+    @Override
     public int damageDropped (int meta)
     {
         return meta;
     }
 
+    @Override
     public int quantityDropped (Random random)
     {
         return 1;
@@ -155,10 +161,11 @@ public class SmelteryBlock extends InventoryBlock
     @Override
     public Integer getGui (World world, int x, int y, int z, EntityPlayer entityplayer)
     {
-        //return -1;
+        // return -1;
         return TConstruct.proxy.smelteryGuiID;
     }
 
+    @Override
     public void randomDisplayTick (World world, int x, int y, int z, Random random)
     {
         if (isActive(world, x, y, z))
@@ -197,6 +204,7 @@ public class SmelteryBlock extends InventoryBlock
         }
     }
 
+    @Override
     public int getLightValue (IBlockAccess world, int x, int y, int z)
     {
         return !isActive(world, x, y, z) ? 0 : 9;
@@ -221,7 +229,7 @@ public class SmelteryBlock extends InventoryBlock
         }
         else
         {
-            //world.markBlockForUpdate(x, y, z);
+            // world.markBlockForUpdate(x, y, z);
             player.openGui(getModInstance(), integer, world, x, y, z);
             return true;
         }
@@ -244,7 +252,7 @@ public class SmelteryBlock extends InventoryBlock
             else
                 return new SmelteryDrainLogic();
         case 3:
-            return null; //Furnace
+            return null; // Furnace
         }
         return new MultiServantLogic();
     }
@@ -263,11 +271,11 @@ public class SmelteryBlock extends InventoryBlock
         logic.checkValidPlacement();
     }
 
-    /*@Override
-    public void breakBlock (World world, int x, int y, int z, int par5, int par6) //Don't drop inventory
-    {
-        world.removeBlockTileEntity(x, y, z);
-    }*/
+    /*
+     * @Override public void breakBlock (World world, int x, int y, int z, int
+     * par5, int par6) //Don't drop inventory { world.removeBlockTileEntity(x,
+     * y, z); }
+     */
 
     @Override
     public void getSubBlocks (Item id, CreativeTabs tab, List list)
@@ -283,7 +291,7 @@ public class SmelteryBlock extends InventoryBlock
     @Override
     public void onNeighborBlockChange (World world, int x, int y, int z, Block nBlockID)
     {
-        //System.out.println("Neighbor changed");
+        // System.out.println("Neighbor changed");
         TileEntity logic = world.getTileEntity(x, y, z);
         if (logic instanceof IServantLogic)
         {

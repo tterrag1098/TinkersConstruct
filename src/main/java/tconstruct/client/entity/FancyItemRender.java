@@ -2,7 +2,6 @@ package tconstruct.client.entity;
 
 import java.util.Random;
 
-import mantle.blocks.BlockUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -30,7 +29,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class FancyItemRender extends Render
 {
-    private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+    private static final ResourceLocation field_110798_h = new ResourceLocation("textures/misc/enchanted_item_glint.png");
     private RenderBlocks itemRenderBlocks = new RenderBlocks();
 
     /** The RNG used in RenderItem (for bobbing itemstacks on the ground) */
@@ -72,13 +71,13 @@ public class FancyItemRender extends Render
 
             Block block = null;
 
-            block = BlockUtils.getBlockFromItem(itemstack.getItem());
+            block = Block.getBlockFromItem(itemstack.getItem());
 
             if (ForgeHooksClient.renderEntityItem(par1EntityItem, itemstack, f2, f3, random, renderManager.renderEngine, field_147909_c, 1))
             {
                 ;
             }
-            else if (itemstack.getItemSpriteNumber() == 0 && block != null && RenderBlocks.renderItemIn3d(BlockUtils.getBlockFromItem(itemstack.getItem()).getRenderType()))
+            else if (itemstack.getItemSpriteNumber() == 0 && block != null && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(itemstack.getItem()).getRenderType()))
             {
                 GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
 
@@ -271,7 +270,7 @@ public class FancyItemRender extends Render
             {
                 GL11.glDepthFunc(GL11.GL_EQUAL);
                 GL11.glDisable(GL11.GL_LIGHTING);
-                this.renderManager.renderEngine.bindTexture(RES_ITEM_GLINT);
+                this.renderManager.renderEngine.bindTexture(field_110798_h);
                 GL11.glEnable(GL11.GL_BLEND);
                 GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
                 float f13 = 0.76F;
@@ -320,8 +319,8 @@ public class FancyItemRender extends Render
         int i1;
         float f1;
         float f2;
-        //TODO make this be the block equivalent to k
-        Block block = BlockUtils.getBlockFromItem(k);
+
+        Block block = Block.getBlockFromItem(k);//(k < Block.blocksList.length ? Block.blocksList[k] : null);
         if (par3ItemStack.getItemSpriteNumber() == 0 && block != null && RenderBlocks.renderItemIn3d(block.getRenderType()))
         {
             par2TextureManager.bindTexture(TextureMap.locationBlocksTexture);
@@ -414,7 +413,7 @@ public class FancyItemRender extends Render
         GL11.glDepthFunc(GL11.GL_GREATER);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDepthMask(false);
-        manager.bindTexture(RES_ITEM_GLINT);
+        manager.bindTexture(field_110798_h);
         this.zLevel -= 50.0F;
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
@@ -445,7 +444,7 @@ public class FancyItemRender extends Render
                 GL11.glDepthFunc(GL11.GL_GREATER);
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glDepthMask(false);
-                par2TextureManager.bindTexture(RES_ITEM_GLINT);
+                par2TextureManager.bindTexture(field_110798_h);
                 this.zLevel -= 50.0F;
                 GL11.glEnable(GL11.GL_BLEND);
                 GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
@@ -567,6 +566,7 @@ public class FancyItemRender extends Render
         tessellator.draw();
     }
 
+    @Override
     protected ResourceLocation getEntityTexture (Entity par1Entity)
     {
         return this.func_110796_a((EntityItem) par1Entity);
@@ -578,6 +578,7 @@ public class FancyItemRender extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
+    @Override
     public void doRender (Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
         this.doRenderItem((EntityItem) par1Entity, par2, par4, par6, par8, par9);

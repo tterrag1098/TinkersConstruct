@@ -29,6 +29,7 @@ public class SmelteryScan extends TankLayerScan
         super.checkValidStructure();
     }
 
+    @Override
     protected boolean checkAir (int x, int y, int z)
     {
         Block block = world.getBlock(x, y, z);
@@ -122,13 +123,13 @@ public class SmelteryScan extends TankLayerScan
         }
     }
 
-    //Sync lava tanks for fuel values
+    // Sync lava tanks for fuel values
     @Override
     public void readNetworkNBT (NBTTagCompound tags)
     {
         super.readNetworkNBT(tags);
 
-        NBTTagList tanks = tags.getTagList("Tanks", 9);
+        NBTTagList tanks = tags.getTagList("Tanks", 10);
         if (tanks != null)
         {
             lavaTanks.clear();

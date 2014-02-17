@@ -30,26 +30,31 @@ public class StoneTorch extends MantleBlock
     }
 
     /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
+     * Returns a bounding box from the pool of bounding boxes (this means this
+     * box can change after the pool has been cleared to be reused)
      */
+    @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World par1World, int par2, int par3, int par4)
     {
         return null;
     }
 
     /**
-     * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
-     * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
+     * Is this block (a) opaque and (b) a full 1m cube? This determines whether
+     * or not to render the shared face of two adjacent blocks and also whether
+     * the player can attach torches, redstone wire, etc to this block.
      */
+    @Override
     public boolean isOpaqueCube ()
     {
         return false;
     }
 
     /**
-     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
+     * If this block doesn't render as an ordinary block it will return False
+     * (examples: signs, buttons, stairs, etc)
      */
+    @Override
     public boolean renderAsNormalBlock ()
     {
         return false;
@@ -58,6 +63,7 @@ public class StoneTorch extends MantleBlock
     /**
      * The type of render function that is called for this block
      */
+    @Override
     public int getRenderType ()
     {
         return 2;
@@ -80,8 +86,10 @@ public class StoneTorch extends MantleBlock
     }
 
     /**
-     * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
+     * Checks to see if its valid to put this block at the specified
+     * coordinates. Args: world, x, y, z
      */
+    @Override
     public boolean canPlaceBlockAt (World par1World, int par2, int par3, int par4)
     {
         return par1World.isSideSolid(par2 - 1, par3, par4, EAST, true) || par1World.isSideSolid(par2 + 1, par3, par4, WEST, true) || par1World.isSideSolid(par2, par3, par4 - 1, SOUTH, true)
@@ -89,8 +97,10 @@ public class StoneTorch extends MantleBlock
     }
 
     /**
-     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
+     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z,
+     * side, hitX, hitY, hitZ, block metadata
      */
+    @Override
     public int onBlockPlaced (World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
     {
         int j1 = par9;
@@ -147,6 +157,7 @@ public class StoneTorch extends MantleBlock
         return j1;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons (IIconRegister par1IconRegister)
     {
@@ -154,8 +165,9 @@ public class StoneTorch extends MantleBlock
     }
 
     /**
-     * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
-     * their own) Args: x, y, z, neighbor blockID
+     * Lets the block know when one of its neighbor changes. Doesn't know which
+     * neighbor changed (coordinates passed are their own) Args: x, y, z,
+     * neighbor blockID
      */
     public void onNeighborBlockChange (World par1World, int par2, int par3, int par4, int par5)
     {
@@ -211,8 +223,9 @@ public class StoneTorch extends MantleBlock
     }
 
     /**
-     * Tests if the block can remain at its current location and will drop as an item if it is unable to stay. Returns
-     * True if it can stay and False if it drops. Args: world, x, y, z
+     * Tests if the block can remain at its current location and will drop as an
+     * item if it is unable to stay. Returns True if it can stay and False if it
+     * drops. Args: world, x, y, z
      */
     protected boolean dropTorchIfCantStay (World par1World, int par2, int par3, int par4)
     {
@@ -233,9 +246,10 @@ public class StoneTorch extends MantleBlock
     }
 
     /**
-     * Ray traces through the blocks collision from start vector to end vector returning a ray trace hit. Args: world,
-     * x, y, z, startVec, endVec
+     * Ray traces through the blocks collision from start vector to end vector
+     * returning a ray trace hit. Args: world, x, y, z, startVec, endVec
      */
+    @Override
     public MovingObjectPosition collisionRayTrace (World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3)
     {
         int l = par1World.getBlockMetadata(par2, par3, par4) & 7;
@@ -266,6 +280,7 @@ public class StoneTorch extends MantleBlock
         return super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     /**
      * A randomly called display update to be able to add particles or other items for display

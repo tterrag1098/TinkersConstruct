@@ -16,7 +16,7 @@ import tconstruct.inventory.CraftingStationContainer;
 
 public class CraftingStationLogic extends InventoryLogic implements ISidedInventory
 {
-    public WeakReference<IInventory> chest; //TODO: These are prototypes
+    public WeakReference<IInventory> chest; // TODO: These are prototypes
     public WeakReference<IInventory> doubleChest;
     public WeakReference<IInventory> patternChest;
     public WeakReference<IInventory> furnace;
@@ -25,7 +25,8 @@ public class CraftingStationLogic extends InventoryLogic implements ISidedInvent
 
     public CraftingStationLogic()
     {
-        super(17); //9 for crafting, 1 for output, 6 for extensions, 1 for plans
+        super(17); // 9 for crafting, 1 for output, 6 for extensions, 1 for
+                   // plans
     }
 
     @Override
@@ -60,7 +61,7 @@ public class CraftingStationLogic extends InventoryLogic implements ISidedInvent
                 }
             }
         }
-        
+
         return new CraftingStationContainer(inventoryplayer, this, x, y, z);
     }
 
@@ -77,6 +78,7 @@ public class CraftingStationLogic extends InventoryLogic implements ISidedInvent
         return "crafters.CraftingStation";
     }
 
+    @Override
     public boolean canDropInventorySlot (int slot)
     {
         if (slot == 0)
@@ -101,7 +103,7 @@ public class CraftingStationLogic extends InventoryLogic implements ISidedInvent
     {
         return true;
     }
-    
+
     @Override
     public String getInventoryName ()
     {

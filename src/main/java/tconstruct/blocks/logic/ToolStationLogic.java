@@ -1,7 +1,5 @@
 package tconstruct.blocks.logic;
 
-import tconstruct.inventory.ToolStationContainer;
-import tconstruct.library.crafting.ToolBuilder;
 import mantle.blocks.abstracts.InventoryLogic;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -9,6 +7,8 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import tconstruct.inventory.ToolStationContainer;
+import tconstruct.library.crafting.ToolBuilder;
 
 /* Simple class for storing items in the block
  */
@@ -30,6 +30,7 @@ public class ToolStationLogic extends InventoryLogic implements ISidedInventory
         toolName = "";
     }
 
+    @Override
     public boolean canDropInventorySlot (int slot)
     {
         if (slot == 0)
@@ -55,6 +56,7 @@ public class ToolStationLogic extends InventoryLogic implements ISidedInventory
         return new ToolStationContainer(inventoryplayer, this);
     }
 
+    @Override
     public void markDirty ()
     {
         buildTool(toolName);
@@ -87,6 +89,7 @@ public class ToolStationLogic extends InventoryLogic implements ISidedInventory
         buildTool(name);
     }
 
+    @Override
     public boolean canUpdate ()
     {
         return false;

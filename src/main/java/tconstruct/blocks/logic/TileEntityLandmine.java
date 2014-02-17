@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * 
  * @author fuj1n
- *
+ * 
  */
 public class TileEntityLandmine extends TileEntity implements IInventory
 {
@@ -71,7 +71,7 @@ public class TileEntityLandmine extends TileEntity implements IInventory
     public void readFromNBT (NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 9);
+        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
         this.inventory = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
@@ -232,15 +232,16 @@ public class TileEntityLandmine extends TileEntity implements IInventory
     @Override
     public boolean isItemValidForSlot (int i, ItemStack itemstack)
     {
-        //Should automatic camo insertion be allowed.
+        // Should automatic camo insertion be allowed.
         if (i == 3)
         {
             return false;
         }
         else
         {
-            //Here for mDiyo to decide if he wants automation for insertion/extraction of the items to be an option.
-            //Would be useful for building automated mine laying machines.
+            // Here for mDiyo to decide if he wants automation for
+            // insertion/extraction of the items to be an option.
+            // Would be useful for building automated mine laying machines.
             return false;
         }
     }

@@ -28,11 +28,9 @@ public class Scythe extends Weapon
         this.setUnlocalizedName("InfiTool.Scythe");
     }
 
-    /*@Override
-    protected String getHarvestType()
-    {
-    	return "sword";
-    }*/
+    /*
+     * @Override protected String getHarvestType() { return "sword"; }
+     */
 
     @Override
     protected Material[] getEffectiveMaterials ()
@@ -40,7 +38,9 @@ public class Scythe extends Weapon
         return materials;
     }
 
-    static Material[] materials = new Material[] { Material.web, Material.cactus };//TODO find this//, Material.pumpkin, Material.plants, Material.vine, Material.leaves };
+    static Material[] materials = new Material[] { Material.web, Material.cactus };// TODO find this//, Material.pumpkin,
+                                                                                   // Material.plants, Material.vine,
+                                                                                   // Material.leaves };
 
     @Override
     public Item getHeadItem ()
@@ -99,6 +99,7 @@ public class Scythe extends Weapon
         }
     }
 
+    @Override
     public float getDurabilityModifier ()
     {
         return 3.0f;
@@ -178,7 +179,10 @@ public class Scythe extends Weapon
                         if (!cancelHarvest)
                         {
                             Block block = world.getBlock(xPos, yPos, zPos);
-                            if (block != null)// && (block.getMaterial() == Material.leaves || block.isLeaves(world, xPos, yPos, zPos)))
+                            if (block != null)// && (block.getMaterial() ==
+                                              // Material.leaves ||
+                                              // block.isLeaves(world, xPos,
+                                              // yPos, zPos)))
                             {
                                 for (int iter = 0; iter < materials.length; iter++)
                                 {
@@ -206,6 +210,7 @@ public class Scythe extends Weapon
         return super.onBlockStartBreak(stack, x, y, z, player);
     }
 
+    @Override
     public boolean onLeftClickEntity (ItemStack stack, EntityPlayer player, Entity entity)
     {
         AxisAlignedBB box = AxisAlignedBB.getAABBPool().getAABB(entity.posX, entity.posY, entity.posZ, entity.posX + 1.0D, entity.posY + 1.0D, entity.posZ + 1.0D).expand(1.0D, 1.0D, 1.0D);

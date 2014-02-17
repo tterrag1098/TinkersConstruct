@@ -1,6 +1,5 @@
 package tconstruct.client.block;
 
-import mantle.blocks.BlockUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemBlock;
@@ -35,7 +34,7 @@ public class TankAirRender implements ISimpleBlockRenderingHandler
                 ItemStack item = logic.getStackInSlot(0);
                 if (item.getItem() instanceof ItemBlock)
                 {
-                    Block inv = BlockUtils.getBlockFromItemStack(item);
+                    Block inv = Block.getBlockFromItem(item.getItem());
                     renderer.setOverrideBlockTexture(inv.getIcon(1, item.getItemDamage()));
                     renderer.renderBlockByRenderType(inv, x, y, z);
                     renderer.clearOverrideBlockTexture();

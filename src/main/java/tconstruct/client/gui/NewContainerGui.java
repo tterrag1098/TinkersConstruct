@@ -85,6 +85,7 @@ public abstract class NewContainerGui extends GuiScreen
     /**
      * Adds the buttons (and other controls) to the screen in question.
      */
+    @Override
     public void initGui ()
     {
         super.initGui();
@@ -96,6 +97,7 @@ public abstract class NewContainerGui extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
+    @Override
     public void drawScreen (int mouseX, int mouseY, float par3)
     {
         this.drawDefaultBackground();
@@ -145,26 +147,20 @@ public abstract class NewContainerGui extends GuiScreen
             }
         }
 
-        /*for (int slotIter = 0; slotIter < this.container.otherInventorySlots.size(); ++slotIter)
-        {
-            ActiveSlot slot = (ActiveSlot) this.container.otherInventorySlots.get(slotIter);
-            if (slot.getActive())
-            {
-                this.drawSlotInventory(slot);
-
-                if (this.isMouseOverSlot(slot, mouseX, mouseY))
-                {
-                    this.mainSlot = slot;
-                    GL11.glDisable(GL11.GL_LIGHTING);
-                    GL11.glDisable(GL11.GL_DEPTH_TEST);
-                    slotXPos = slot.xDisplayPosition;
-                    slotYPos = slot.yDisplayPosition;
-                    this.drawGradientRect(slotXPos, slotYPos, slotXPos + 16, slotYPos + 16, -2130706433, -2130706433);
-                    GL11.glEnable(GL11.GL_LIGHTING);
-                    GL11.glEnable(GL11.GL_DEPTH_TEST);
-                }
-            }
-        }*/
+        /*
+         * for (int slotIter = 0; slotIter <
+         * this.container.otherInventorySlots.size(); ++slotIter) { ActiveSlot
+         * slot = (ActiveSlot) this.container.otherInventorySlots.get(slotIter);
+         * if (slot.getActive()) { this.drawSlotInventory(slot);
+         * 
+         * if (this.isMouseOverSlot(slot, mouseX, mouseY)) { this.mainSlot =
+         * slot; GL11.glDisable(GL11.GL_LIGHTING);
+         * GL11.glDisable(GL11.GL_DEPTH_TEST); slotXPos = slot.xDisplayPosition;
+         * slotYPos = slot.yDisplayPosition; this.drawGradientRect(slotXPos,
+         * slotYPos, slotXPos + 16, slotYPos + 16, -2130706433, -2130706433);
+         * GL11.glEnable(GL11.GL_LIGHTING); GL11.glEnable(GL11.GL_DEPTH_TEST); }
+         * } }
+         */
 
         this.drawGuiContainerForegroundLayer(mouseX, mouseY);
         InventoryPlayer inventoryplayer = this.mc.thePlayer.inventory;
@@ -236,6 +232,7 @@ public abstract class NewContainerGui extends GuiScreen
         itemRenderer.zLevel = 0.0F;
     }
 
+    @Override
     protected void renderToolTip (ItemStack par1ItemStack, int par2, int par3)
     {
         List list = par1ItemStack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
@@ -256,9 +253,11 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Draws the text when mouse is over creative inventory tab. Params: current creative tab to be checked, current
-     * mouse x position, current mouse y position.
+     * Draws the text when mouse is over creative inventory tab. Params: current
+     * creative tab to be checked, current mouse x position, current mouse y
+     * position.
      */
+    @Override
     protected void drawCreativeTabHoveringText (String par1Str, int par2, int par3)
     {
         this.func_102021_a(Arrays.asList(new String[] { par1Str }), par2, par3);
@@ -343,14 +342,16 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Draw the foreground layer for the GuiContainer (everything in front of the items)
+     * Draw the foreground layer for the GuiContainer (everything in front of
+     * the items)
      */
     protected void drawGuiContainerForegroundLayer (int par1, int par2)
     {
     }
 
     /**
-     * Draw the background layer for the GuiContainer (everything behind the items)
+     * Draw the background layer for the GuiContainer (everything behind the
+     * items)
      */
     protected abstract void drawGuiContainerBackgroundLayer (float f, int i, int j);
 
@@ -488,6 +489,7 @@ public abstract class NewContainerGui extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
+    @Override
     protected void mouseClicked (int mouseX, int mouseY, int mouseButton)
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -635,9 +637,11 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Called when the mouse is moved or a mouse button is released.  Signature: (mouseX, mouseY, which) which==-1 is
-     * mouseMove, which==0 or which==1 is mouseUp
+     * Called when the mouse is moved or a mouse button is released. Signature:
+     * (mouseX, mouseY, which) which==-1 is mouseMove, which==0 or which==1 is
+     * mouseUp
      */
+    @Override
     protected void mouseMovedOrUp (int par1, int par2, int par3)
     {
         Slot slot = this.getSlotAtPosition(par1, par2);
@@ -802,8 +806,8 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Args: left, top, width, height, pointX, pointY. Note: left, top are local to Gui, pointX, pointY are local to
-     * screen
+     * Args: left, top, width, height, pointX, pointY. Note: left, top are local
+     * to Gui, pointX, pointY are local to screen
      */
     protected boolean isPointInRegion (int par1, int par2, int par3, int par4, int par5, int par6)
     {
@@ -825,8 +829,10 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
+     * Fired when a key is typed. This is the equivalent of
+     * KeyListener.keyTyped(KeyEvent e).
      */
+    @Override
     protected void keyTyped (char par1, int par2)
     {
         if (par2 == 1 || par2 == this.mc.gameSettings.keyBindInventory.getKeyCode())
@@ -850,7 +856,8 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * This function is what controls the hotbar shortcut check when you press a number key when hovering a stack.
+     * This function is what controls the hotbar shortcut check when you press a
+     * number key when hovering a stack.
      */
     protected boolean checkHotbarKeys (int par1)
     {
@@ -870,8 +877,10 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Called when the screen is unloaded. Used to disable keyboard repeat events
+     * Called when the screen is unloaded. Used to disable keyboard repeat
+     * events
      */
+    @Override
     public void onGuiClosed ()
     {
         if (this.mc.thePlayer != null)
@@ -881,8 +890,10 @@ public abstract class NewContainerGui extends GuiScreen
     }
 
     /**
-     * Returns true if this GUI should pause the game when it is displayed in single-player
+     * Returns true if this GUI should pause the game when it is displayed in
+     * single-player
      */
+    @Override
     public boolean doesGuiPauseGame ()
     {
         return false;
@@ -891,6 +902,7 @@ public abstract class NewContainerGui extends GuiScreen
     /**
      * Called from the main game loop to update the screen.
      */
+    @Override
     public void updateScreen ()
     {
         super.updateScreen();

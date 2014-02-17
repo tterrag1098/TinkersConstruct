@@ -41,6 +41,7 @@ public class SoilBlock extends TConstructBlock
         }
     }
 
+    @Override
     public void onEntityCollidedWithBlock (World world, int x, int y, int z, Entity entity)
     {
         int meta = world.getBlockMetadata(x, y, z);
@@ -56,17 +57,16 @@ public class SoilBlock extends TConstructBlock
         }
     }
 
+    @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z)
     {
         return Blocks.soul_sand.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
-    /*public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
-    {
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        if (world.getBlockMetadata(x, y, z) >= 3)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.875F, 1.0F);
-        }
-    }*/
+    /*
+     * public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y,
+     * int z) { this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F); if
+     * (world.getBlockMetadata(x, y, z) >= 3) { this.setBlockBounds(0.0F, 0.0F,
+     * 0.0F, 1.0F, 0.875F, 1.0F); } }
+     */
 }

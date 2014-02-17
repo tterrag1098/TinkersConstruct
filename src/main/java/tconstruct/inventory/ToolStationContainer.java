@@ -50,7 +50,7 @@ public class ToolStationContainer extends ActiveContainer
         }
     }
 
-    //posX and posY must be the same length
+    // posX and posY must be the same length
     public void resetSlots (int[] posX, int[] posY)
     {
         /* Station inventory */
@@ -85,6 +85,7 @@ public class ToolStationContainer extends ActiveContainer
         return true;
     }
 
+    @Override
     public ItemStack transferStackInSlot (EntityPlayer player, int slotID)
     {
         ItemStack stack = null;
@@ -154,43 +155,27 @@ public class ToolStationContainer extends ActiveContainer
         Slot otherInventorySlot;
         ItemStack copyStack = null;
 
-        /*if (stack.isStackable())
-        {
-            while (stack.stackSize > 0 && (!playerInventory && slotIndex < slotsTotal || playerInventory && slotIndex >= slotsStart))
-            {
-                otherInventorySlot = (Slot)this.inventorySlots.get(slotIndex);
-                copyStack = otherInventorySlot.getStack();
-
-                if (copyStack != null && copyStack.itemID == stack.itemID && (!stack.getHasSubtypes() || stack.getItemDamage() == copyStack.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack, copyStack))
-                {
-                    int totalSize = copyStack.stackSize + stack.stackSize;
-
-                    if (totalSize <= stack.getMaxStackSize())
-                    {
-                        stack.stackSize = 0;
-                        copyStack.stackSize = totalSize;
-                        otherInventorySlot.onSlotChanged();
-                        failedToMerge = true;
-                    }
-                    else if (copyStack.stackSize < stack.getMaxStackSize())
-                    {
-                        stack.stackSize -= stack.getMaxStackSize() - copyStack.stackSize;
-                        copyStack.stackSize = stack.getMaxStackSize();
-                        otherInventorySlot.onSlotChanged();
-                        failedToMerge = true;
-                    }
-                }
-
-                if (playerInventory)
-                {
-                    --slotIndex;
-                }
-                else
-                {
-                    ++slotIndex;
-                }
-            }
-        }*/
+        /*
+         * if (stack.isStackable()) { while (stack.stackSize > 0 &&
+         * (!playerInventory && slotIndex < slotsTotal || playerInventory &&
+         * slotIndex >= slotsStart)) { otherInventorySlot =
+         * (Slot)this.inventorySlots.get(slotIndex); copyStack =
+         * otherInventorySlot.getStack();
+         * 
+         * if (copyStack != null && copyStack.itemID == stack.itemID &&
+         * (!stack.getHasSubtypes() || stack.getItemDamage() ==
+         * copyStack.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack,
+         * copyStack)) { int totalSize = copyStack.stackSize + stack.stackSize;
+         * 
+         * if (totalSize <= stack.getMaxStackSize()) { stack.stackSize = 0;
+         * copyStack.stackSize = totalSize; otherInventorySlot.onSlotChanged();
+         * failedToMerge = true; } else if (copyStack.stackSize <
+         * stack.getMaxStackSize()) { stack.stackSize -= stack.getMaxStackSize()
+         * - copyStack.stackSize; copyStack.stackSize = stack.getMaxStackSize();
+         * otherInventorySlot.onSlotChanged(); failedToMerge = true; } }
+         * 
+         * if (playerInventory) { --slotIndex; } else { ++slotIndex; } } }
+         */
 
         if (stack.stackSize > 0)
         {
@@ -229,10 +214,13 @@ public class ToolStationContainer extends ActiveContainer
             }
         }
 
-        /*boolean emptySlots = ( ((Slot) inventorySlots.get(2)).getStack() == null && ((Slot) inventorySlots.get(3)).getStack() == null );
-        TConstruct.logger.info("Empty slots");
-        if (!failedToMerge && emptySlots)
-        	player.worldObj.playAuxSFX(1021, (int)player.posX, (int)player.posY, (int)player.posZ, 0);*/
+        /*
+         * boolean emptySlots = ( ((Slot) inventorySlots.get(2)).getStack() ==
+         * null && ((Slot) inventorySlots.get(3)).getStack() == null );
+         * TConstruct.logger.info("Empty slots"); if (!failedToMerge &&
+         * emptySlots) player.worldObj.playAuxSFX(1021, (int)player.posX,
+         * (int)player.posY, (int)player.posZ, 0);
+         */
 
         return failedToMerge;
     }

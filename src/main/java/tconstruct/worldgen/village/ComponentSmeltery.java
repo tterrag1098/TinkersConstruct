@@ -5,13 +5,11 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
-import tconstruct.TConstruct;
 import tconstruct.common.TRepo;
 
 public class ComponentSmeltery extends StructureVillagePieces.House1
@@ -37,9 +35,10 @@ public class ComponentSmeltery extends StructureVillagePieces.House1
     }
 
     /**
-     * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
-     * the end, it adds Fences...
+     * second Part of Structure generating, this for example places Spiderwebs,
+     * Mob Spawners, it closes Mineshafts at the end, it adds Fences...
      */
+    @Override
     public boolean addComponentParts (World world, Random random, StructureBoundingBox sbb)
     {
         if (this.averageGroundLevel < 0)
@@ -77,7 +76,6 @@ public class ComponentSmeltery extends StructureVillagePieces.House1
             for (int i1 = 0; i1 < 9; ++i1)
             {
                 this.clearCurrentPositionBlocksUpwards(world, i1, 9, l, sbb);
-                //TODO fillCurrentPositionBlocksDownwards 
                 this.func_151554_b(world, Blocks.stonebrick, 0, i1, -1, l, sbb);
             }
         }
@@ -93,24 +91,6 @@ public class ComponentSmeltery extends StructureVillagePieces.House1
         return true;
     }
 
-    int remapDirection (int direction)
-    {
-        TConstruct.logger.info("Direction: " + direction);
-        switch (direction)
-        {
-        case 0:
-            return 2;
-        case 1:
-            return 3;
-        case 2:
-            return 1;
-        case 3:
-            return 0;
-        }
-        TConstruct.logger.error("This shouldn't happen (remapDirection in tconstruct.worldgen.village.ComponentSmeltery)");
-        return -1;
-    }
-
     protected void fillWithMetaBlocks (World par1World, StructureBoundingBox par2StructureBoundingBox, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block placeBlockID,
             int placeBlockMeta, Block replaceBlockID, int replaceBlockMeta, boolean alwaysReplace)
     {
@@ -119,19 +99,5 @@ public class ComponentSmeltery extends StructureVillagePieces.House1
         Block k2 = this.func_151558_b(replaceBlockID, replaceBlockMeta);
         int l2 = this.func_151557_c(replaceBlockID, replaceBlockMeta);
         super.fillWithMetadataBlocks(par1World, par2StructureBoundingBox, minX, minY, minZ, maxX, maxY, maxZ, i2, j2, k2, l2, alwaysReplace);
-    }
-
-    @Override
-    protected void func_143012_a (NBTTagCompound var1)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    protected void func_143011_b (NBTTagCompound var1)
-    {
-        // TODO Auto-generated method stub
-
     }
 }

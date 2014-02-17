@@ -1,8 +1,5 @@
 package tconstruct.client.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 
 import tconstruct.TConstruct;
 import tconstruct.blocks.logic.StencilTableLogic;
-import tconstruct.common.TContent;
 import tconstruct.common.TRepo;
 import tconstruct.inventory.PatternShaperContainer;
 import tconstruct.util.network.packet.PacketStencilTable;
@@ -32,6 +28,7 @@ public class StencilTableGui extends GuiContainer
         patternIndex = 0;
     }
 
+    @Override
     public void onGuiClosed ()
     {
         super.onGuiClosed();
@@ -46,6 +43,7 @@ public class StencilTableGui extends GuiContainer
 
     private static final ResourceLocation background = new ResourceLocation("tinker", "textures/gui/patternshaper.png");
 
+    @Override
     protected void drawGuiContainerBackgroundLayer (float par1, int par2, int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -59,6 +57,7 @@ public class StencilTableGui extends GuiContainer
         }
     }
 
+    @Override
     public void initGui ()
     {
         super.initGui();
@@ -82,6 +81,7 @@ public class StencilTableGui extends GuiContainer
         //}
     }
 
+    @Override
     protected void actionPerformed (GuiButton button)
     {
         ItemStack pattern = logic.getStackInSlot(0);
@@ -121,6 +121,7 @@ public class StencilTableGui extends GuiContainer
 
     void updateServer (ItemStack stack)
     {
+
         TConstruct.packetPipeline.sendToServer(new PacketStencilTable(logic.xCoord, logic.yCoord, logic.zCoord, stack));
     }
 }

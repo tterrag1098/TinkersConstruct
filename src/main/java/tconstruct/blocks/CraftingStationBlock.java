@@ -18,6 +18,8 @@ import tconstruct.blocks.logic.CraftingStationLogic;
 import tconstruct.client.block.TableRender;
 import tconstruct.common.TProxyCommon;
 import tconstruct.library.TConstructRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class CraftingStationBlock extends InventoryBlock
 {
@@ -26,7 +28,7 @@ public class CraftingStationBlock extends InventoryBlock
         super(material);
         this.setCreativeTab(TConstructRegistry.blockTab);
         this.setHardness(2f);
-        this.stepSound = Block.soundTypeWood;
+        this.setStepSound(Block.soundTypeWood);
     }
 
     //Block.hasComparatorInputOverride and Block.getComparatorInputOverride
@@ -41,9 +43,10 @@ public class CraftingStationBlock extends InventoryBlock
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
-        return icons[meta * 3 + getTextureIndex(side)];
+        return icons[getTextureIndex(side)];
     }
 
     public int getTextureIndex (int side)

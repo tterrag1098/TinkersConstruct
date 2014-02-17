@@ -12,7 +12,8 @@ public class InventoryCraftingStation extends InventoryCrafting
     private int inventoryWidth;
 
     /**
-     * Class containing the callbacks for the events on_GUIClosed and on_CraftMaxtrixChanged.
+     * Class containing the callbacks for the events on_GUIClosed and
+     * on_CraftMaxtrixChanged.
      */
     private Container eventHandler;
     private InventoryLogic logic;
@@ -28,16 +29,19 @@ public class InventoryCraftingStation extends InventoryCrafting
     /**
      * Returns the number of slots in the inventory.
      */
+    @Override
     public int getSizeInventory ()
     {
         return 9;
     }
 
+    @Override
     public ItemStack getStackInSlot (int slot)
     {
         return slot >= this.getSizeInventory() + 1 ? null : logic.getStackInSlot(slot + 1);
     }
 
+    @Override
     public ItemStack getStackInRowAndColumn (int row, int column)
     {
         if (row >= 0 && row < this.inventoryWidth)
@@ -61,14 +65,15 @@ public class InventoryCraftingStation extends InventoryCrafting
         return false;
     }
 
+    @Override
     public ItemStack getStackInSlotOnClosing (int par1)
     {
         return null;
     }
 
     /**
-     * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
-     * new stack.
+     * Removes from an inventory slot (first arg) up to a specified number
+     * (second arg) of items and returns them in a new stack.
      */
     @Override
     public ItemStack decrStackSize (int slotID, int par2)
@@ -106,8 +111,10 @@ public class InventoryCraftingStation extends InventoryCrafting
     }
 
     /**
-     * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+     * Sets the given item stack to the specified slot in the inventory (can be
+     * crafting or armor sections).
      */
+    @Override
     public void setInventorySlotContents (int slot, ItemStack itemstack)
     {
         logic.setInventorySlotContents(slot + 1, itemstack);
@@ -115,9 +122,10 @@ public class InventoryCraftingStation extends InventoryCrafting
     }
 
     /**
-     * Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. *Isn't
-     * this more of a set than a get?*
+     * Returns the maximum stack size for a inventory slot. Seems to always be
+     * 64, possibly will be extended. *Isn't this more of a set than a get?*
      */
+    @Override
     public int getInventoryStackLimit ()
     {
         return 64;
@@ -126,13 +134,16 @@ public class InventoryCraftingStation extends InventoryCrafting
     /**
      * Called when an the contents of an Inventory change, usually
      */
+    @Override
     public void markDirty ()
     {
     }
 
     /**
-     * Do not make give this method the name canInteractWith because it clashes with Container
+     * Do not make give this method the name canInteractWith because it clashes
+     * with Container
      */
+    @Override
     public boolean isUseableByPlayer (EntityPlayer par1EntityPlayer)
     {
         return true;
@@ -147,7 +158,8 @@ public class InventoryCraftingStation extends InventoryCrafting
     }
 
     /**
-     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
+     * Returns true if automation is allowed to insert the given stack (ignoring
+     * stack size) into the given slot.
      */
     public boolean isStackValidForSlot (int par1, ItemStack par2ItemStack)
     {

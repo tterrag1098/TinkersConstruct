@@ -37,6 +37,7 @@ public class ModReinforced extends ModInteger
         addToolTip(tool, color + tooltipName, color + key);
     }
 
+    @Override
     protected int addToolTip (ItemStack tool, String tooltip, String modifierTip)
     {
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
@@ -47,7 +48,7 @@ public class ModReinforced extends ModInteger
             String tip = "Tooltip" + tipNum;
             if (!tags.hasKey(tip))
             {
-                //tags.setString(tip, tooltip);
+                // tags.setString(tip, tooltip);
                 String modTip = "ModifierTip" + tipNum;
                 String tag = tags.getString(modTip);
                 tags.setString(modTip, getProperName(modifierTip, tag));
@@ -59,7 +60,7 @@ public class ModReinforced extends ModInteger
                 String tag = tags.getString(modTip);
                 if (tag.contains(modifierTip))
                 {
-                    //tags.setString(tip, getProperName(tooltip, tag));
+                    // tags.setString(tip, getProperName(tooltip, tag));
                     tag = tags.getString(modTip);
                     tags.setString(modTip, getProperName(modifierTip, tag));
                     return tipNum;

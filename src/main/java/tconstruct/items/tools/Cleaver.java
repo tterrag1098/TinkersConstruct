@@ -129,19 +129,18 @@ public class Cleaver extends Weapon
         {
             entity.hurtResistantTime += 7;
 
-            /*if (entity instanceof EntityLiving)
-            {
-                EntityLiving living = (EntityLiving) entity;
-                if (living.getHealth() <= 0)
-                {
-
-                }
-            }*/
-            //if (entity.getHealth() <= 0)
+            /*
+             * if (entity instanceof EntityLiving) { EntityLiving living =
+             * (EntityLiving) entity; if (living.getHealth() <= 0) {
+             * 
+             * } }
+             */
+            // if (entity.getHealth() <= 0)
         }
         return true;
     }
 
+    @Override
     public void onUpdate (ItemStack stack, World world, Entity entity, int par4, boolean par5)
     {
         super.onUpdate(stack, world, entity, par4, par5);
@@ -156,12 +155,10 @@ public class Cleaver extends Weapon
         }
     }
 
-    /*@Override
-    public boolean onEntitySwing (EntityLiving entity, ItemStack stack)
-    {
-        entity.swingProgressInt /= 2;
-        return false;
-    }*/
+    /*
+     * @Override public boolean onEntitySwing (EntityLiving entity, ItemStack
+     * stack) { entity.swingProgressInt /= 2; return false; }
+     */
 
     @Override
     public boolean willAllowOffhandWeapon ()

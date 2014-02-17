@@ -37,6 +37,7 @@ public abstract class BowBase extends ToolCore
         super(0);
     }
 
+    @Override
     public int durabilityTypeAccessory ()
     {
         return 2;
@@ -50,6 +51,7 @@ public abstract class BowBase extends ToolCore
     }
 
     /* Bow usage */
+    @Override
     public void onPlayerStoppedUsing (ItemStack stack, World world, EntityPlayer player, int useRemaining)
     {
         int time = this.getMaxItemUseDuration(stack) - useRemaining;
@@ -89,7 +91,7 @@ public abstract class BowBase extends ToolCore
             }
 
             EntityArrow arrowEntity = null;
-            //if (tinkerArrow != null)
+            // if (tinkerArrow != null)
             if (slotID != -1 && (arrowID == -1 || slotID < arrowID))
             {
                 ItemStack arrowStack = tinkerArrow.copy();
@@ -117,7 +119,7 @@ public abstract class BowBase extends ToolCore
 
             if (slotID != -1 && (arrowID == -1 || slotID < arrowID))
                 ((ArrowEntity) arrowEntity).setKnockbackModStrength(toolTag.getFloat("Knockback"));
-            //var10 += toolTag.getFloat("Knockback");
+            // var10 += toolTag.getFloat("Knockback");
 
             if (var10 > 0)
             {
@@ -146,7 +148,7 @@ public abstract class BowBase extends ToolCore
             }
             else
             {
-                //if (tinkerArrow != null)
+                // if (tinkerArrow != null)
                 if (slotID != -1 && (arrowID == -1 || slotID < arrowID))
                 {
                     player.inventory.consumeInventoryItem(TRepo.arrow);
@@ -185,22 +187,27 @@ public abstract class BowBase extends ToolCore
     /**
      * How long it takes to use or consume an item
      */
+    @Override
     public int getMaxItemUseDuration (ItemStack par1ItemStack)
     {
         return 72000;
     }
 
     /**
-     * returns the action that specifies what animation to play when the items is being used
+     * returns the action that specifies what animation to play when the items
+     * is being used
      */
+    @Override
     public EnumAction getItemUseAction (ItemStack par1ItemStack)
     {
         return EnumAction.bow;
     }
 
     /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
+     * Called whenever this item is equipped and the right mouse button is
+     * pressed. Args: itemStack, world, entityPlayer
      */
+    @Override
     public ItemStack onItemRightClick (ItemStack stack, World par2World, EntityPlayer player)
     {
         if (stack.hasTagCompound())
@@ -225,6 +232,7 @@ public abstract class BowBase extends ToolCore
         return stack;
     }
 
+    @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float clickX, float clickY, float clickZ)
     {
         return false;
@@ -471,8 +479,8 @@ public abstract class BowBase extends ToolCore
     public void registerPartPaths (int index, String[] location)
     {
         headStrings.put(index, location[0]);
-        //brokenHeadStrings.put(index, location[1]);
-        //handleStrings.put(index, location[2]);
+        // brokenHeadStrings.put(index, location[1]);
+        // handleStrings.put(index, location[2]);
         if (location.length > 3)
             accessoryStrings.put(index, location[3]);
         if (location.length > 4)

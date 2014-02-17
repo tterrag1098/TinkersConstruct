@@ -52,7 +52,8 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
             if (this.pullingLiquids)
                 pullLiquids();
         }
-        //this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        // this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
+        // this.zCoord);
         if (ticks == 20)
         {
             if (recentlyFilledDelay != 0)
@@ -122,7 +123,7 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
         HashMap tankMap = this.getOutputs();
         if (tankMap.size() <= 0)
         {
-            //TConstruct.logger.info("Nope, no connections to go to");
+            // TConstruct.logger.info("Nope, no connections to go to");
             return;
         }
         boolean yFilled = false;
@@ -212,7 +213,7 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
         HashMap tankMap = this.getOutputs();
         if (tankMap.size() <= 0)
         {
-            //TConstruct.logger.info("Nope, no connections to go to");
+            // TConstruct.logger.info("Nope, no connections to go to");
             return;
         }
         boolean yFilled = false;
@@ -344,7 +345,7 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
         }
     }
 
-    private HashMap getOutputs ()
+    public HashMap getOutputs ()
     {
         HashMap map = new HashMap();
         TileEntity tankXplus = this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord);
@@ -403,6 +404,7 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
         return map;
     }
 
+    @Override
     public int fill (FluidStack stack, boolean doFill)
     {
         if (stack == null)
@@ -464,6 +466,7 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
         return filled;
     }
 
+    @Override
     public FluidStack drain (int maxDrain, boolean doDrain)
     {
         if ((this.liquid == null))
@@ -628,7 +631,7 @@ public class CastingChannelLogic extends TileEntity implements IFluidTank, IFlui
     @Override
     public void setActive (boolean flag)
     {
-        //pullingLiquids = flag;
+        // pullingLiquids = flag;
         pullingLiquids = !pullingLiquids;
     }
 

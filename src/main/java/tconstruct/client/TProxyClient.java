@@ -219,7 +219,7 @@ public class TProxyClient extends TProxyCommon
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
-        renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, getIcon(block.getIcon(1, meta)));//block.getIcon(1, meta));
+        renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, getIcon(block.getIcon(1, meta)));// block.getIcon(1, meta));
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, -1F);
@@ -286,6 +286,7 @@ public class TProxyClient extends TProxyCommon
         }
     }
 
+    @Override
     public void registerTickHandler ()
     {
         new TClientTickHandler();
@@ -295,6 +296,7 @@ public class TProxyClient extends TProxyCommon
     }
 
     /* Registers any rendering code. */
+    @Override
     public void registerRenderer ()
     {
         Minecraft mc = Minecraft.getMinecraft();
@@ -358,6 +360,7 @@ public class TProxyClient extends TProxyCommon
     public static Document volume2;
     public static Document smelter;
 
+    @Override
     public void readManuals ()
     {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -597,12 +600,12 @@ public class TProxyClient extends TProxyCommon
         MantleClientRegistry.registerManualLargeRecipe("smelterybasin", new ItemStack(TRepo.searedBlock, 1, 2), searedbrick, null, searedbrick, searedbrick, null, searedbrick, searedbrick,
                 searedbrick, searedbrick);
 
-        //Traps
+        // Traps
         ItemStack reed = new ItemStack(Items.sugar);
         MantleClientRegistry.registerManualLargeRecipe("punji", new ItemStack(TRepo.punji), reed, null, reed, null, reed, null, reed, null, reed);
         MantleClientRegistry.registerManualSmallRecipe("barricade", new ItemStack(TRepo.barricadeOak), null, log, null, log);
 
-        //Machines
+        // Machines
         ItemStack alubrassIngot = new ItemStack(TRepo.materials, 1, 14);
         ItemStack bronzeIngot = new ItemStack(TRepo.materials, 1, 13);
         ItemStack blankCast = new ItemStack(TRepo.blankPattern, 1, 1);
@@ -803,6 +806,7 @@ public class TProxyClient extends TProxyCommon
     /* Keybindings */
     public static TControls controlInstance;
 
+    @Override
     public void registerKeys ()
     {
         controlInstance = new TControls();
@@ -829,6 +833,7 @@ public class TProxyClient extends TProxyCommon
         settings.loadOptions();
     }
 
+    @Override
     public void spawnParticle (String particle, double xPos, double yPos, double zPos, double velX, double velY, double velZ)
     {
         this.doSpawnParticle(particle, xPos, yPos, zPos, velX, velY, velZ);
@@ -1034,7 +1039,8 @@ public class TProxyClient extends TProxyCommon
     @Override
     public void postInit ()
     {
-        //MinecraftForgeClient.registerItemRenderer(TRepo.armorPattern.itemID, new RenderArmorCast());
+        // MinecraftForgeClient.registerItemRenderer(TRepo.armorPattern.itemID,
+        // new RenderArmorCast());
     }
 
     private static IIcon getIcon (IIcon icon)

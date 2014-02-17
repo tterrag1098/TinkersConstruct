@@ -47,7 +47,13 @@ public class Mattock extends DualHarvestTool
         return "shovel";
     }
 
-    static Material[] axeMaterials = { Material.wood, Material.cactus };//TODO find this//, Material.pumpkin, Material.plants, Material.vine };
+    static Material[] axeMaterials = { Material.wood, Material.cactus };// TODO
+                                                                        // find
+                                                                        // this//,
+                                                                        // Material.pumpkin,
+                                                                        // Material.plants,
+                                                                        // Material.vine
+                                                                        // };
     static Material[] shovelMaterials = { Material.grass, Material.ground, Material.clay };
 
     @Override
@@ -62,6 +68,7 @@ public class Mattock extends DualHarvestTool
         return TRepo.shovelHead;
     }
 
+    @Override
     public int durabilityTypeAccessory ()
     {
         return 2;
@@ -109,6 +116,7 @@ public class Mattock extends DualHarvestTool
         return AbilityHelper.hoeGround(stack, player, world, x, y, z, side, random);
     }
 
+    @Override
     public void buildTool (int id, String name, List list)
     {
         if (!PHConstruct.denyMattock || allowCrafting(id))

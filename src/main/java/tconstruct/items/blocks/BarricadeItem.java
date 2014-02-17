@@ -30,6 +30,7 @@ public class BarricadeItem extends ItemBlock
         list.add(StatCollector.translateToLocal("barricade.tooltip"));
     }
 
+    @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
         Block b = world.getBlock(x, y, z);
@@ -86,7 +87,7 @@ public class BarricadeItem extends ItemBlock
         else if (world.canPlaceEntityOnSide(this.b, x, y, z, false, side, player, stack))
         {
             Block block = this.b;
-            //int meta = this.getMetadata(stack.getItemDamage());
+            // int meta = this.getMetadata(stack.getItemDamage());
             int rotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
             int meta = rotation * 4;
             int metadata = this.b.onBlockPlaced(world, x, y, z, side, hitX, hitY, hitZ, meta);

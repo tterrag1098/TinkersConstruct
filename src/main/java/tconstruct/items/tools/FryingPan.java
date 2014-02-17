@@ -32,7 +32,10 @@ public class FryingPan extends Weapon
     public boolean hitEntity (ItemStack stack, EntityLivingBase mob, EntityLivingBase player)
     {
         AbilityHelper.knockbackEntity(mob, 1.7f);
-        mob.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 0)); //5 seconds of stun
+        mob.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 0)); // 5
+                                                                               // seconds
+                                                                               // of
+                                                                               // stun
         return true;
     }
 
@@ -50,11 +53,13 @@ public class FryingPan extends Weapon
         world.playSoundEffect(entity.posX, entity.posY, entity.posZ, "tinker:frypan_hit", 1.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
     }
 
+    @Override
     public String getToolName ()
     {
         return "Frying Pan";
     }
 
+    @Override
     public void getSubItems (Item id, CreativeTabs tab, List list)
     {
         super.getSubItems(id, tab, list);
@@ -78,6 +83,7 @@ public class FryingPan extends Weapon
         list.add(tool);
     }
 
+    @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float clickX, float clickY, float clickZ)
     {
         if (side == 0 || !player.isSneaking())

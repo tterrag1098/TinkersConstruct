@@ -24,16 +24,19 @@ public class BlockFalling extends Block
         super(p_i45405_1_);
     }
 
+    @Override
     public void onBlockAdded (World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
     {
         p_149726_1_.scheduleBlockUpdate(p_149726_2_, p_149726_3_, p_149726_4_, this, this.tickRate(p_149726_1_));
     }
 
+    @Override
     public void onNeighborBlockChange (World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
     {
         p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, this.tickRate(p_149695_1_));
     }
 
+    @Override
     public void updateTick (World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
     {
         if (!p_149674_1_.isRemote)
@@ -52,9 +55,15 @@ public class BlockFalling extends Block
             {
                 if (!p_149830_1_.isRemote)
                 {
-                    //EntityFallingBlock entityfallingblock = new EntityFallingBlock(p_149830_1_, (double)((float)p_149830_2_ + 0.5F), (double)((float)p_149830_3_ + 0.5F), (double)((float)p_149830_4_ + 0.5F), this, p_149830_1_.getBlockMetadata(p_149830_2_, p_149830_3_, p_149830_4_));
-                    //this.func_149829_a(entityfallingblock);
-                    //p_149830_1_.spawnEntityInWorld(entityfallingblock);
+                    // EntityFallingBlock entityfallingblock = new
+                    // EntityFallingBlock(p_149830_1_,
+                    // (double)((float)p_149830_2_ + 0.5F),
+                    // (double)((float)p_149830_3_ + 0.5F),
+                    // (double)((float)p_149830_4_ + 0.5F), this,
+                    // p_149830_1_.getBlockMetadata(p_149830_2_, p_149830_3_,
+                    // p_149830_4_));
+                    // this.func_149829_a(entityfallingblock);
+                    // p_149830_1_.spawnEntityInWorld(entityfallingblock);
                 }
             }
             else
@@ -78,6 +87,7 @@ public class BlockFalling extends Block
     {
     }
 
+    @Override
     public int tickRate (World p_149738_1_)
     {
         return 2;
@@ -97,9 +107,10 @@ public class BlockFalling extends Block
         }
         else
         {
-            //TODO: King, take a look here when doing liquids!
-            //Material material = block.blockMaterial;
-            //return material == Material.water ? true : material == Material.lava;
+            // TODO: King, take a look here when doing liquids!
+            // Material material = block.blockMaterial;
+            // return material == Material.water ? true : material ==
+            // Material.lava;
             return false;
         }
     }

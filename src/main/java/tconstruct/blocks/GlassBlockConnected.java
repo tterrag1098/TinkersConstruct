@@ -10,8 +10,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.util.config.PHConstruct;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-/** @author fuj1n
+/**
+ * @author fuj1n
  * 
  */
 
@@ -32,7 +35,7 @@ public class GlassBlockConnected extends MantleBlock
         this.setCreativeTab(TConstructRegistry.blockTab);
     }
 
-    //For FMP support
+    // For FMP support
     public IIcon[] getIcons ()
     {
         return icons;
@@ -58,11 +61,18 @@ public class GlassBlockConnected extends MantleBlock
 
     /**
      * This is checked to see if the texture should connect to this block
-     * @param par2 x
-     * @param par3 y
-     * @param par4 z
-     * @param par5 ID this block is asking to connect to (may be 0 if there is no block)
-     * @param par6 Metadata of the block this block is trying to connect to
+     * 
+     * @param par2
+     *            x
+     * @param par3
+     *            y
+     * @param par4
+     *            z
+     * @param par5
+     *            ID this block is asking to connect to (may be 0 if there is no
+     *            block)
+     * @param par6
+     *            Metadata of the block this block is trying to connect to
      * @return true if should connect
      */
     public boolean shouldConnectToBlock (IBlockAccess par1IBlockAccess, int par2, int par3, int par4, Block par5, int par6)
@@ -71,6 +81,7 @@ public class GlassBlockConnected extends MantleBlock
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
         return par1IBlockAccess.getBlockMetadata(par2, par3, par4) == 15 ? icons[0] : getConnectedBlockTexture(par1IBlockAccess, par2, par3, par4, par5, icons);
@@ -592,6 +603,7 @@ public class GlassBlockConnected extends MantleBlock
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int par1, int par2)
     {
         return icons[0];

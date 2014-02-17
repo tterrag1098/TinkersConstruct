@@ -33,7 +33,7 @@ public class EquipBlock extends InventoryBlock
         super(material);
         this.setHardness(0.3f);
         this.setBlockBounds(0, 0, 0, 1, 0.25f, 1);
-        //this.setCreativeTab(ToolConstruct.materialTab);
+        // this.setCreativeTab(ToolConstruct.materialTab);
     }
 
     @Override
@@ -42,15 +42,19 @@ public class EquipBlock extends InventoryBlock
         return new String[] { "toolstation_top" };
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
         return Blocks.iron_block.getIcon(side, meta);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons (IIconRegister par1IconRegister)
     {
-        //this.blockIcon = par1iconRegister.registerIcon(Block.blockIron.getUnlocalizedName());
+        // this.blockIcon =
+        // par1iconRegister.registerIcon(Block.blockIron.getUnlocalizedName());
     }
 
     @Override
@@ -83,6 +87,7 @@ public class EquipBlock extends InventoryBlock
         return new FrypanLogic();
     }
 
+    @Override
     public void randomDisplayTick (World world, int x, int y, int z, Random random)
     {
         if (isActive(world, x, y, z))
@@ -96,6 +101,7 @@ public class EquipBlock extends InventoryBlock
         }
     }
 
+    @Override
     public void onBlockPlacedBy (World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
     {
         super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
@@ -170,6 +176,7 @@ public class EquipBlock extends InventoryBlock
         super.breakBlock(par1World, x, y, z, par5, meta);
     }
 
+    @Override
     public int getLightValue (IBlockAccess world, int x, int y, int z)
     {
         return !isActive(world, x, y, z) ? 0 : 9;

@@ -2,16 +2,6 @@ package tconstruct.blocks;
 
 import java.util.List;
 
-import tconstruct.TConstruct;
-import tconstruct.blocks.logic.PartBuilderLogic;
-import tconstruct.blocks.logic.PatternChestLogic;
-import tconstruct.blocks.logic.StencilTableLogic;
-import tconstruct.blocks.logic.ToolStationLogic;
-import tconstruct.client.block.TableRender;
-import tconstruct.common.TContent;
-import tconstruct.common.TRepo;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.util.config.PHConstruct;
 import mantle.blocks.abstracts.InventoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,6 +16,17 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import tconstruct.TConstruct;
+import tconstruct.blocks.logic.PartBuilderLogic;
+import tconstruct.blocks.logic.PatternChestLogic;
+import tconstruct.blocks.logic.StencilTableLogic;
+import tconstruct.blocks.logic.ToolStationLogic;
+import tconstruct.client.block.TableRender;
+import tconstruct.common.TRepo;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.util.config.PHConstruct;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ToolStationBlock extends InventoryBlock
 {
@@ -53,6 +54,7 @@ public class ToolStationBlock extends InventoryBlock
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
         if (meta <= 4)
@@ -109,6 +111,7 @@ public class ToolStationBlock extends InventoryBlock
         return true;
     }
 
+    @Override
     public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z)
     {
         int metadata = world.getBlockMetadata(x, y, z);
@@ -152,7 +155,7 @@ public class ToolStationBlock extends InventoryBlock
         case 13:
             return new StencilTableLogic();
             /*case 14:
-                return new CastingTableLogic();*/
+            	return new CastingTableLogic();*/
         default:
             return null;
         }

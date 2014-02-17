@@ -57,6 +57,7 @@ public class ToolStationGui extends NewContainerGui
         Keyboard.enableRepeatEvents(true);
     }
 
+    @Override
     protected void mouseClicked (int mouseX, int mouseY, int mouseButton)
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -81,6 +82,7 @@ public class ToolStationGui extends NewContainerGui
         body = StatCollector.translateToLocal("gui.toolforge2");
     }
 
+    @Override
     public void initGui ()
     {
         super.initGui();
@@ -102,6 +104,7 @@ public class ToolStationGui extends NewContainerGui
         }
     }
 
+    @Override
     protected void actionPerformed (GuiButton button)
     {
         ((GuiButton) this.buttonList.get(guiType)).enabled = true;
@@ -144,6 +147,7 @@ public class ToolStationGui extends NewContainerGui
         toolSlots.resetSlots(slotX, slotY);
     }
 
+    @Override
     public void updateScreen ()
     {
         super.updateScreen();
@@ -151,8 +155,10 @@ public class ToolStationGui extends NewContainerGui
     }
 
     /**
-     * Draw the foreground layer for the GuiContainer (everything in front of the items)
+     * Draw the foreground layer for the GuiContainer (everything in front of
+     * the items)
      */
+    @Override
     protected void drawGuiContainerForegroundLayer (int par1, int par2)
     {
         this.fontRendererObj.drawString(StatCollector.translateToLocal(logic.getInvName()), 6, 8, 0x000000);
@@ -185,7 +191,7 @@ public class ToolStationGui extends NewContainerGui
         final int maxDur = tags.getInteger("TotalDurability");
         int availableDurability = maxDur - durability;
 
-        //Durability
+        // Durability
         int base = 24;
         int offset = 0;
         if (maxDur > 0)
@@ -205,7 +211,7 @@ public class ToolStationGui extends NewContainerGui
         }
 
         final float stonebound = tags.getFloat("Shoddy");
-        //Attack
+        // Attack
         if (categories.contains("weapon"))
         {
             int attack = (int) (tags.getInteger("Attack"));
@@ -276,12 +282,15 @@ public class ToolStationGui extends NewContainerGui
             offset++;
             this.fontRendererObj.drawString(StatCollector.translateToLocal("gui.toolstation9") + df.format(accuracy - 4) + "%", xSize + 8, base + offset * 10, 0xffffff);
             offset++;
-            /*this.fontRendererObj.drawString("Chance to break: " + df.format(shatter)+"%", xSize + 8, base + offset * 10, 0xffffff);
-            offset++;*/
+            /*
+             * this.fontRendererObj.drawString("Chance to break: " +
+             * df.format(shatter)+"%", xSize + 8, base + offset * 10, 0xffffff);
+             * offset++;
+             */
             offset++;
         }
 
-        //Mining
+        // Mining
         if (categories.contains("dualharvest"))
         {
             float mineSpeed = tags.getInteger("MiningSpeed") / 100f;
@@ -406,7 +415,7 @@ public class ToolStationGui extends NewContainerGui
         case 2:
             return StatCollector.translateToLocal("gui.partcrafter.mining3");
         case 3:
-            return StatCollector.translateToLocal("gui.partcrafter.mining4"); //Mithril
+            return StatCollector.translateToLocal("gui.partcrafter.mining4"); // Mithril
         case 4:
             return StatCollector.translateToLocal("gui.partcrafter.mining5");
         case 5:
@@ -421,8 +430,10 @@ public class ToolStationGui extends NewContainerGui
     private static final ResourceLocation description = new ResourceLocation("tinker", "textures/gui/description.png");
 
     /**
-     * Draw the background layer for the GuiContainer (everything behind the items)
+     * Draw the background layer for the GuiContainer (everything behind the
+     * items)
      */
+    @Override
     protected void drawGuiContainerBackgroundLayer (float par1, int par2, int par3)
     {
         // Draw the background
@@ -459,6 +470,7 @@ public class ToolStationGui extends NewContainerGui
 
     }
 
+    @Override
     protected void keyTyped (char par1, int keyCode)
     {
         if (keyCode == 1 || (!active && keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()))
@@ -479,35 +491,29 @@ public class ToolStationGui extends NewContainerGui
 
     void updateServer (String name)
     {
-        /*ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
-        DataOutputStream outputStream = new DataOutputStream(bos);
-        try
-        {
-            outputStream.writeByte(1);
-            outputStream.writeInt(logic.getWorld().provider.dimensionId);
-            outputStream.writeInt(logic.xCoord);
-            outputStream.writeInt(logic.yCoord);
-            outputStream.writeInt(logic.zCoord);
-            outputStream.writeUTF(name);
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-
-        Packet250CustomPayload packet = new Packet250CustomPayload();
-        packet.channel = "TConstruct";
-        packet.data = bos.toByteArray();
-        packet.length = bos.size();
-
-        PacketDispatcher.sendPacketToServer(packet);*/
+        /*
+         * ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
+         * DataOutputStream outputStream = new DataOutputStream(bos); try {
+         * outputStream.writeByte(1);
+         * outputStream.writeInt(logic.getWorld().provider.dimensionId);
+         * outputStream.writeInt(logic.xCoord);
+         * outputStream.writeInt(logic.yCoord);
+         * outputStream.writeInt(logic.zCoord); outputStream.writeUTF(name); }
+         * catch (Exception ex) { ex.printStackTrace(); }
+         * 
+         * Packet250CustomPayload packet = new Packet250CustomPayload();
+         * packet.channel = "TConstruct"; packet.data = bos.toByteArray();
+         * packet.length = bos.size();
+         * 
+         * PacketDispatcher.sendPacketToServer(packet);
+         */
 
         TConstruct.packetPipeline.sendToServer(new PacketToolStation(logic.xCoord, logic.yCoord, logic.zCoord, name));
     }
 
-    /*protected void mouseClicked(int par1, int par2, int par3)
-    {
-        super.mouseClicked(par1, par2, par3);
-        text.mouseClicked(par1, par2, par3);
-    }*/
+    /*
+     * protected void mouseClicked(int par1, int par2, int par3) {
+     * super.mouseClicked(par1, par2, par3); text.mouseClicked(par1, par2,
+     * par3); }
+     */
 }

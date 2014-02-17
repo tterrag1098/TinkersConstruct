@@ -33,18 +33,21 @@ public class SlimeLeaves extends BlockLeaves
         this.setHardness(0.3f);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor ()
     {
         return 0xffffff;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor (int par1)
     {
         return 0xffffff;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier (IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
@@ -97,24 +100,26 @@ public class SlimeLeaves extends BlockLeaves
     /**
      * Returns the ID of the items to drop on destruction.
      */
+    @Override
     public Item getItemDropped (int par1, Random par2Random, int par3)
     {
         return new ItemStack(TRepo.slimeSapling).getItem();
     }
 
     /**
-     * Drops the block items with a specified chance of dropping the specified items
+     * Drops the block items with a specified chance of dropping the specified
+     * items
      */
+    @Override
     public void dropBlockAsItemWithChance (World world, int x, int y, int z, int meta, float chance, int fortune)
     {
         if (!world.isRemote)
         {
             int dropChance = 35;
 
-            /*if ((meta & 3) == 3)
-            {
-                j1 = 40;
-            }*/
+            /*
+             * if ((meta & 3) == 3) { j1 = 40; }
+             */
 
             if (fortune > 0)
             {

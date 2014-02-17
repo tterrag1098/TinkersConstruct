@@ -1,10 +1,10 @@
 package tconstruct.blocks.logic;
 
-import tconstruct.inventory.PatternChestContainer;
 import mantle.blocks.abstracts.InventoryLogic;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
+import tconstruct.inventory.PatternChestContainer;
 
 public class PatternChestLogic extends InventoryLogic
 {
@@ -13,6 +13,7 @@ public class PatternChestLogic extends InventoryLogic
         super(30);
     }
 
+    @Override
     public boolean canUpdate ()
     {
         return false;
@@ -29,7 +30,7 @@ public class PatternChestLogic extends InventoryLogic
     {
         return new PatternChestContainer(inventoryplayer, this);
     }
-    
+
     @Override
     public String getInventoryName ()
     {

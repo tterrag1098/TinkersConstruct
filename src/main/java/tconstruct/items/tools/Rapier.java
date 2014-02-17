@@ -19,11 +19,13 @@ public class Rapier extends Weapon
         this.setUnlocalizedName("InfiTool.Rapier");
     }
 
+    @Override
     public EnumAction getItemUseAction (ItemStack par1ItemStack)
     {
         return EnumAction.none;
     }
 
+    @Override
     public ItemStack onItemRightClick (ItemStack stack, World world, EntityPlayer player)
     {
         if (player.onGround)
@@ -40,8 +42,8 @@ public class Rapier extends Weapon
     @Override
     public boolean hitEntity (ItemStack stack, EntityLivingBase mob, EntityLivingBase player)
     {
-        //AbilityHelper.hitEntity(stack, mob, player, damageVsEntity);
-        //AbilityHelper.knockbackEntity(mob, 0.8f);
+        // AbilityHelper.hitEntity(stack, mob, player, damageVsEntity);
+        // AbilityHelper.knockbackEntity(mob, 0.8f);
         mob.motionY *= 0.8;
         if (mob.hurtResistantTime > 18)
             mob.hurtResistantTime -= 5;
@@ -60,11 +62,11 @@ public class Rapier extends Weapon
         return 0.8f;
     }
 
-    /*public float chargeAttack ()
-    {
-    	return 1.0f;
-    }*/
+    /*
+     * public float chargeAttack () { return 1.0f; }
+     */
 
+    @Override
     public boolean pierceArmor ()
     {
         return true;
@@ -112,6 +114,7 @@ public class Rapier extends Weapon
         return "rapier";
     }
 
+    @Override
     protected Material[] getEffectiveMaterials ()
     {
         return none;

@@ -11,7 +11,6 @@ import mantle.blocks.iface.IServantLogic;
 import mantle.world.CoordTuple;
 import mantle.world.CoordTupleSort;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
@@ -198,7 +197,7 @@ public class TankLayerScan extends LogicComponent
     protected boolean checkAir (int x, int y, int z)
     {
         Block block = world.getBlock(x, y, z);
-        if (block == null || block == Blocks.air)// || block == TContent.tankAir)
+        if (block == null || world.isAirBlock(x, y, z))// || block == TContent.tankAir)
             return true;
 
         return false;
@@ -207,7 +206,7 @@ public class TankLayerScan extends LogicComponent
     protected boolean checkServant (int x, int y, int z)
     {
         Block block = world.getBlock(x, y, z);
-        if (block == null || block == Blocks.air || !isValidBlock(x, y, z))
+        if (block == null || world.isAirBlock(x, y, z) || !isValidBlock(x, y, z))
             return false;
 
         if (!block.hasTileEntity(world.getBlockMetadata(x, y, z)))
@@ -501,7 +500,7 @@ public class TankLayerScan extends LogicComponent
     public void readFromNBT (NBTTagCompound tags)
     {
         super.readFromNBT(tags);
-        NBTTagList layerAir = tags.getTagList("AirLayer", 9);
+        NBTTagList layerAir = tags.getTagList("AirLayer", 10);
         if (layerAir != null)
         {
             layerAirCoords.clear();
@@ -513,7 +512,7 @@ public class TankLayerScan extends LogicComponent
             }
         }
 
-        NBTTagList blocks = tags.getTagList("Blocks", 9);
+        NBTTagList blocks = tags.getTagList("Blocks", 10);
         if (blocks != null)
         {
             blockCoords.clear();
@@ -525,7 +524,7 @@ public class TankLayerScan extends LogicComponent
             }
         }
 
-        NBTTagList air = tags.getTagList("Air", 9);
+        NBTTagList air = tags.getTagList("Air", 10);
         if (air != null)
         {
             airCoords.clear();
@@ -539,6 +538,7 @@ public class TankLayerScan extends LogicComponent
         structureTop = tags.getInteger("structureTop");
     }
 
+    @Override
     public void readNetworkNBT (NBTTagCompound tags)
     {
         completeStructure = tags.getBoolean("Complete");
@@ -571,6 +571,7 @@ public class TankLayerScan extends LogicComponent
         tags.setInteger("structureTop", structureTop);
     }
 
+    @Override
     public void writeNetworkNBT (NBTTagCompound tags)
     {
         tags.setBoolean("Complete", completeStructure);

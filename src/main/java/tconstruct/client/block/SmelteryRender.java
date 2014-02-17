@@ -1,6 +1,5 @@
 package tconstruct.client.block;
 
-import mantle.blocks.BlockUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
@@ -143,12 +142,8 @@ public class SmelteryRender implements ISimpleBlockRenderingHandler
                     float blockHeight = input.stackSize / (float) blockToRender.stackSize;
                     renderer.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, MathHelper.clamp_float(blockHeight, 0.01F, 1.0F), 1.0F);
 
-                    //TODO is this needed???
-                    //if (blockToRender.itemID < 4096) //Block
-                    // {
-                    Block liquidBlock = BlockUtils.getBlockFromItemStack(blockToRender);
+                    Block liquidBlock = Block.getBlockFromItem(blockToRender.getItem());
                     BlockSkinRenderHelper.renderMetadataBlock(liquidBlock, blockToRender.getItemDamage(), posX + i % 3, posY, posZ + i / 3, renderer, world);
-                    //}
 
                     /*else //No items, only blocks
                     //Item                        
@@ -163,7 +158,7 @@ public class SmelteryRender implements ISimpleBlockRenderingHandler
     }
 
     @Override
-    public boolean shouldRender3DInInventory (int modelID)
+    public boolean shouldRender3DInInventory (int modelId)
     {
         return true;
     }

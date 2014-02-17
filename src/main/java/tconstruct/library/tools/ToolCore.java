@@ -30,35 +30,33 @@ import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/** NBTTags
- * Main tag - InfiTool
+/**
+ * NBTTags Main tag - InfiTool
+ * 
  * @see ToolBuilder
  * 
- * Required:
- * Head: Base and render tag, above the handle
- * Handle: Base and render tag, bottom layer
+ *      Required: Head: Base and render tag, above the handle Handle: Base and
+ *      render tag, bottom layer
  * 
- * Damage: Replacement for metadata
- * MaxDamage: ItemStacks only read setMaxDamage()
- * Broken: Represents whether the tool is broken (boolean)
- * Attack: How much damage a mob will take
- * MiningSpeed: The speed at which a tool mines
+ *      Damage: Replacement for metadata MaxDamage: ItemStacks only read
+ *      setMaxDamage() Broken: Represents whether the tool is broken (boolean)
+ *      Attack: How much damage a mob will take MiningSpeed: The speed at which
+ *      a tool mines
  * 
- * Others: 
- * Accessory: Base and tag, above head. Sword guards, binding, etc
- * Effects: Render tag, top layer. Fancy effects like moss or diamond edge.
- * Render order: Handle > Head > Accessory > Effect1 > Effect2 > Effect3 > etc
- * Unbreaking: Reinforced in-game, 10% chance to not use durability per level
- * Stonebound: Mines faster as the tool takes damage, but has less attack
- * Spiny: Opposite of stonebound
+ *      Others: Accessory: Base and tag, above head. Sword guards, binding, etc
+ *      Effects: Render tag, top layer. Fancy effects like moss or diamond edge.
+ *      Render order: Handle > Head > Accessory > Effect1 > Effect2 > Effect3 >
+ *      etc Unbreaking: Reinforced in-game, 10% chance to not use durability per
+ *      level Stonebound: Mines faster as the tool takes damage, but has less
+ *      attack Spiny: Opposite of stonebound
  * 
- * Modifiers have their own tags.
+ *      Modifiers have their own tags.
  * @see ToolMod
  */
 
 public abstract class ToolCore extends Item implements IEnergyContainerItem, IBattlegearWeapon
 {
-    //TE power constants -- TODO grab these from the items added
+    // TE power constants -- TODO grab these from the items added
     protected int capacity = 400000;
     protected int maxReceive = 75;
     protected int maxExtract = 75;
@@ -81,10 +79,10 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
         canRepair = false;
     }
 
-    /** Determines crafting behavior with regards to durability
-     * 0: None
-     * 1: Adds handle modifier
-     * 2: Averages part with the rest of the tool (head)
+    /**
+     * Determines crafting behavior with regards to durability 0: None 1: Adds
+     * handle modifier 2: Averages part with the rest of the tool (head)
+     * 
      * @return type
      */
 
@@ -144,13 +142,14 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
         return 9;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect (ItemStack par1ItemStack)
     {
         return false;
     }
 
-    //Override me please!
+    // Override me please!
     public int getPartAmount ()
     {
         return 3;
@@ -513,7 +512,7 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
         return ret;
     }
 
-    //Used for sounds and the like
+    // Used for sounds and the like
     public void onEntityDamaged (World world, EntityLivingBase player, Entity entity)
     {
 
@@ -521,7 +520,8 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
 
     /* Creative mode tools */
 
-    public void getSubItems (int id, CreativeTabs tab, List list)
+    @Override
+    public void getSubItems (Item id, CreativeTabs tab, List list)
     {
         Iterator iter = TConstructRegistry.toolMaterials.entrySet().iterator();
         while (iter.hasNext())
@@ -546,7 +546,11 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
             boolean supress = false;
             try
             {
-                clazz = Class.forName("tconstruct.common.TRepo"); //TODO: Make sure this is still working in 1.7.
+                clazz = Class.forName("tconstruct.common.TRepo"); // TODO: Make
+                                                                  // sure this
+                                                                  // is still
+                                                                  // working
+                                                                  // in 1.7.
                 fld = clazz.getField("supressMissingToolLogs");
                 supress = fld.getBoolean(fld);
             }
@@ -579,7 +583,7 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
 
     public Item getHandleItem ()
     {
-        return TConstructRegistry.getItem("toolRod");//TContent.toolRod;
+        return TConstructRegistry.getItem("toolRod");// TContent.toolRod;
     }
 
     /* Updating */
@@ -595,10 +599,10 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
 
     /* Tool uses */
 
-    //Types
+    // Types
     public abstract String[] toolCategories ();
 
-    //Mining
+    // Mining
     @Override
     public boolean onBlockStartBreak (ItemStack stack, int x, int y, int z, EntityPlayer player)
     {
@@ -660,7 +664,7 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
         return this.damageVsEntity;
     }
 
-    //Changes how much durability the base tool has
+    // Changes how much durability the base tool has
     public float getDurabilityModifier ()
     {
         return 1f;
@@ -676,11 +680,13 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
         return 1.0f;
     }
 
-    //Right-click
+    // Right-click
+    @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float clickX, float clickY, float clickZ)
     {
-        /*if (world.isRemote)
-            return true;*/
+        /*
+         * if (world.isRemote) return true;
+         */
 
         boolean used = false;
         int hotbarSlot = player.inventory.currentItem;
@@ -745,14 +751,17 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
             }
         }
 
-        /*if (used) //Update client
-        {
-            Packet103SetSlot packet = new Packet103SetSlot(player.openContainer.windowId, itemSlot, nearbyStack);
-            ((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(packet);
-        }*/
+        /*
+         * if (used) //Update client { Packet103SetSlot packet = new
+         * Packet103SetSlot(player.openContainer.windowId, itemSlot,
+         * nearbyStack);
+         * ((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer
+         * (packet); }
+         */
         return used;
     }
 
+    @Override
     public ItemStack onItemRightClick (ItemStack stack, World world, EntityPlayer player)
     {
         boolean used = false;
@@ -781,6 +790,7 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
     }
 
     /* Vanilla overrides */
+    @Override
     public boolean isItemTool (ItemStack par1ItemStack)
     {
         return false;
@@ -792,21 +802,25 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
         return false;
     }
 
+    @Override
     public boolean isRepairable ()
     {
         return false;
     }
 
+    @Override
     public int getItemEnchantability ()
     {
         return 0;
     }
 
+    @Override
     public boolean isFull3D ()
     {
         return true;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect (ItemStack par1ItemStack, int pass)
     {
@@ -895,7 +909,7 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
     {
     }
 
-    //TE support section -- from COFH core API reference section
+    // TE support section -- from COFH core API reference section
     public void setMaxTransfer (int maxTransfer)
     {
         setMaxReceive(maxTransfer);
@@ -970,5 +984,5 @@ public abstract class ToolCore extends Item implements IEnergyContainerItem, IBa
             return 0;
         return capacity;
     }
-    //end of TE support section
+    // end of TE support section
 }

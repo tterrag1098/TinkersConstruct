@@ -58,7 +58,7 @@ public class LavaTankLogic extends MultiServantLogic implements IFluidHandler
     @Override
     public boolean canFill (ForgeDirection from, Fluid fluid)
     {
-        //return tank.fill(fluid, false) > 0;
+        // return tank.fill(fluid, false) > 0;
         return false;
     }
 
@@ -78,17 +78,13 @@ public class LavaTankLogic extends MultiServantLogic implements IFluidHandler
         return new FluidTankInfo[] { new FluidTankInfo(fluid, tank.getCapacity()) };
     }
 
-    /*@Override
-    public IFluidTank[] getTanks (ForgeDirection direction)
-    {
-        return new IFluidTank[] { tank };
-    }
-
-    @Override
-    public IFluidTank getTank (ForgeDirection direction, FluidStack type)
-    {
-        return tank;
-    }*/
+    /*
+     * @Override public IFluidTank[] getTanks (ForgeDirection direction) {
+     * return new IFluidTank[] { tank }; }
+     * 
+     * @Override public IFluidTank getTank (ForgeDirection direction, FluidStack
+     * type) { return tank; }
+     */
 
     public float getFluidAmountScaled ()
     {
@@ -128,6 +124,7 @@ public class LavaTankLogic extends MultiServantLogic implements IFluidHandler
         writeCustomNBT(tags);
     }
 
+    @Override
     public void readCustomNBT (NBTTagCompound tags)
     {
         if (tags.getBoolean("hasFluid"))
@@ -136,6 +133,7 @@ public class LavaTankLogic extends MultiServantLogic implements IFluidHandler
             tank.setFluid(null);
     }
 
+    @Override
     public void writeCustomNBT (NBTTagCompound tags)
     {
         FluidStack liquid = tank.getFluid();
@@ -164,6 +162,7 @@ public class LavaTankLogic extends MultiServantLogic implements IFluidHandler
     }
 
     /* Updating */
+    @Override
     public boolean canUpdate ()
     {
         return true;

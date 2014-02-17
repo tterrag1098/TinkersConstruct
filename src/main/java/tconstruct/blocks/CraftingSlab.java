@@ -25,6 +25,8 @@ import tconstruct.common.TProxyCommon;
 import tconstruct.common.TRepo;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.util.config.PHConstruct;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class CraftingSlab extends InventorySlab
 {
@@ -48,6 +50,7 @@ public class CraftingSlab extends InventorySlab
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
         return icons[(meta % 8) * 3 + getTextureIndex(side)];
@@ -63,6 +66,7 @@ public class CraftingSlab extends InventorySlab
         return 1;
     }
 
+    @Override
     public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z)
     {
         int metadata = world.getBlockMetadata(x, y, z);

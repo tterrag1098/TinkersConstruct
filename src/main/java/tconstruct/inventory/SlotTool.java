@@ -24,34 +24,41 @@ public class SlotTool extends Slot
     }
 
     /**
-     * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
+     * Check if the stack is a valid item for this slot. Always true beside for
+     * the armor slots.
      */
+    @Override
     public boolean isItemValid (ItemStack stack)
     {
         return false;
-        //return stack.getItem() instanceof ToolCore;
+        // return stack.getItem() instanceof ToolCore;
     }
 
+    @Override
     public void onPickupFromSlot (EntityPlayer par1EntityPlayer, ItemStack stack)
     {
         this.onCrafting(stack);
-        //stack.setUnlocalizedName("\u00A7f" + toolName);
+        // stack.setUnlocalizedName("\u00A7f" + toolName);
         super.onPickupFromSlot(par1EntityPlayer, stack);
     }
 
     /**
-     * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood. Typically increases an
-     * internal count then calls onCrafting(item).
+     * the itemStack passed in is the output - ie, iron ingots, and pickaxes,
+     * not ore and wood. Typically increases an internal count then calls
+     * onCrafting(item).
      */
+    @Override
     protected void onCrafting (ItemStack stack, int par2)
     {
-        //this.field_75228_b += par2;
+        // this.field_75228_b += par2;
         this.onCrafting(stack);
     }
 
     /**
-     * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
+     * the itemStack passed in is the output - ie, iron ingots, and pickaxes,
+     * not ore and wood.
      */
+    @Override
     protected void onCrafting (ItemStack stack)
     {
         NBTTagCompound tags = stack.getTagCompound();
@@ -65,7 +72,8 @@ public class SlotTool extends Slot
             inventory.decrStackSize(1, amount);
             if (!player.worldObj.isRemote && full)
                 player.worldObj.playSoundEffect(player.posX, player.posY, player.posZ, "tinker:little_saw", 1.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
-            //player.worldObj.playAuxSFX(1021, (int)player.posX, (int)player.posY, (int)player.posZ, 0);
+            // player.worldObj.playAuxSFX(1021, (int)player.posX,
+            // (int)player.posY, (int)player.posZ, 0);
             MinecraftForge.EVENT_BUS.post(new ToolCraftedEvent(this.inventory, player, stack));
         }
     }

@@ -44,11 +44,13 @@ public class Hammer extends HarvestTool
         return 4;
     }
 
+    @Override
     public int durabilityTypeAccessory ()
     {
         return 2;
     }
 
+    @Override
     public int durabilityTypeExtra ()
     {
         return 2;
@@ -92,6 +94,7 @@ public class Hammer extends HarvestTool
         return TRepo.largePlate;
     }
 
+    @Override
     public float getDurabilityModifier ()
     {
         return 4.5f;
@@ -362,8 +365,10 @@ public class Hammer extends HarvestTool
             }
         }
 
-        /*if (block == Block.silverfish)
-            return getblockSpeed(tags, block, meta);*/
+        /*
+         * if (block == Block.silverfish) return getblockSpeed(tags, block,
+         * meta);
+         */
 
         return super.getDigSpeed(stack, block, meta);
     }
@@ -401,20 +406,15 @@ public class Hammer extends HarvestTool
         return 0.1f;
     }
 
-    /*@Override
-    public void onUpdate (ItemStack stack, World world, Entity entity, int par4, boolean par5)
-    {
-        super.onUpdate(stack, world, entity, par4, par5);
-        if (entity instanceof EntityPlayer)
-        {
-            EntityPlayer player = (EntityPlayer) entity;
-            ItemStack equipped = player.getCurrentEquippedItem();
-            if (equipped == stack)
-            {
-                player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 1, 1));
-            }
-        }
-    }*/
+    /*
+     * @Override public void onUpdate (ItemStack stack, World world, Entity
+     * entity, int par4, boolean par5) { super.onUpdate(stack, world, entity,
+     * par4, par5); if (entity instanceof EntityPlayer) { EntityPlayer player =
+     * (EntityPlayer) entity; ItemStack equipped =
+     * player.getCurrentEquippedItem(); if (equipped == stack) {
+     * player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 1, 1)); }
+     * } }
+     */
 
     @Override
     public String[] toolCategories ()

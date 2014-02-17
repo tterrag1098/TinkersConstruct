@@ -16,10 +16,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class AdaptiveDrainLogic extends MultiServantLogic implements IFluidHandler, IFacingLogic//, ISwitchableMaster
+public class AdaptiveDrainLogic extends MultiServantLogic implements IFluidHandler, IFacingLogic// , ISwitchableMaster
 {
     byte direction;
 
+    @Override
     public boolean canUpdate ()
     {
         return false;
@@ -50,7 +51,7 @@ public class AdaptiveDrainLogic extends MultiServantLogic implements IFluidHandl
         if (hasValidMaster() && canDrain(from, null))
         {
             AdaptiveSmelteryLogic smeltery = (AdaptiveSmelteryLogic) worldObj.getTileEntity(getMasterPosition().x, getMasterPosition().y, getMasterPosition().z);
-            //  TConstruct.logger.info("Found master");
+            // TConstruct.logger.info("Found master");
             return smeltery.drain(from, maxDrain, doDrain);
         }
         return null;
@@ -149,6 +150,7 @@ public class AdaptiveDrainLogic extends MultiServantLogic implements IFluidHandl
         }
     }
 
+    @Override
     public void readFromNBT (NBTTagCompound tags)
     {
         super.readFromNBT(tags);

@@ -16,17 +16,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import tconstruct.util.landmine.Helper;
+import tconstruct.util.landmine.LandmineStack;
 
 /**
  * 
  * @author fuj1n
- *
+ * 
  */
 public abstract class Behavior
 {
 
-    public static HashMap<ItemStack, Behavior> behaviorsListItems = new HashMap<ItemStack, Behavior>();
-    public static HashMap<ItemStack, Behavior> behaviorsListBlocks = new HashMap<ItemStack, Behavior>();
+    public static HashMap<LandmineStack, Behavior> behaviorsListItems = new HashMap<LandmineStack, Behavior>();
+    public static HashMap<LandmineStack, Behavior> behaviorsListBlocks = new HashMap<LandmineStack, Behavior>();
     protected static Behavior defaultBehavior;
 
     public static Behavior dummy = new BehaviorDummy();
@@ -42,23 +43,25 @@ public abstract class Behavior
 
     public static void registerBuiltInBehaviors ()
     {
+        System.out.println("Test");
         defaultBehavior = new BehaviorDefault();
 
-        addBehavior(new ItemStack(Items.stick), dummy);
-        addBehavior(new ItemStack(Items.redstone), utilityMode);
-        addBehavior(new ItemStack(Blocks.torch), blockThrow);
-        addBehavior(new ItemStack(Items.gunpowder), explosive);
-        addBehavior(new ItemStack(Blocks.tnt), explosive);
-        addBehavior(new ItemStack(Items.fireworks), firework);
-        addBehavior(new ItemStack(Items.potionitem), potion);
-        addBehavior(new ItemStack(Items.fire_charge), fireball);
-        addBehavior(new ItemStack(Items.spawn_egg), spawn);
-        addBehavior(new ItemStack(Items.arrow), shoot);
-        addBehavior(new ItemStack(Items.snowball), shoot);
-        addBehavior(new ItemStack(Items.ender_pearl), shoot);
-        addBehavior(new ItemStack(Items.shears), shear);
+        addBehavior(new LandmineStack(Items.stick), dummy);
+        addBehavior(new LandmineStack(Items.redstone), utilityMode);
+        addBehavior(new LandmineStack(Blocks.torch), blockThrow);
+        addBehavior(new LandmineStack(Items.gunpowder), explosive);
+        addBehavior(new LandmineStack(Blocks.tnt), explosive);
+        addBehavior(new LandmineStack(Items.fireworks), firework);
+        addBehavior(new LandmineStack(Items.potionitem), potion);
+        addBehavior(new LandmineStack(Items.fire_charge), fireball);
+        addBehavior(new LandmineStack(Items.spawn_egg), spawn);
+        addBehavior(new LandmineStack(Items.arrow), shoot);
+        addBehavior(new LandmineStack(Items.snowball), shoot);
+        addBehavior(new LandmineStack(Items.ender_pearl), shoot);
+        addBehavior(new LandmineStack(Items.shears), shear);
 
-        //Make sure the part below this comment is executed last(to avoid conflicts)
+        // Make sure the part below this comment is executed last(to avoid
+        // conflicts)
         Iterator i1 = Block.blockRegistry.iterator();
         while (i1.hasNext())
         {
@@ -68,7 +71,7 @@ public abstract class Behavior
                 Block b = (Block) ob;
                 if (b.getMaterial().isOpaque() && b.renderAsNormalBlock() && !b.canProvidePower() && !(b instanceof ITileEntityProvider) && !behaviorsListBlocks.containsKey(new ItemStack(b)))
                 {
-                    addBehavior(new ItemStack(b), blockThrow);
+                    addBehavior(new LandmineStack(b), blockThrow);
                 }
             }
         }
@@ -85,7 +88,15 @@ public abstract class Behavior
         {
             if (!behaviorsListBlocks.isEmpty())
             {
-                return behaviorsListBlocks.get(par1ItemStack);
+                for (int i = 0; i < behaviorsListBlocks.size(); i++)
+                {
+                    LandmineStack st = (LandmineStack) behaviorsListBlocks.keySet().toArray()[i];
+                    if (st.equals(par1ItemStack))
+                    {
+                        return (Behavior) behaviorsListBlocks.values().toArray()[i];
+                    }
+                }
+                return null;
             }
             else
             {
@@ -96,7 +107,15 @@ public abstract class Behavior
         {
             if (!behaviorsListItems.isEmpty())
             {
-                return behaviorsListItems.get(par1ItemStack);
+                for (int i = 0; i < behaviorsListItems.size(); i++)
+                {
+                    LandmineStack st = (LandmineStack) behaviorsListItems.keySet().toArray()[i];
+                    if (st.equals(par1ItemStack))
+                    {
+                        return (Behavior) behaviorsListItems.values().toArray()[i];
+                    }
+                }
+                return null;
             }
             else
             {
@@ -110,20 +129,20 @@ public abstract class Behavior
         return defaultBehavior;
     }
 
-    public static void addBehavior (ItemStack par1ItemStack, Behavior par2Behavior)
+    public static void addBehavior (LandmineStack par1LandmineStack, Behavior par2Behavior)
     {
-        if (par1ItemStack.getItem() instanceof ItemBlock)
+        if (par1LandmineStack.isBlock)
         {
-            if (!behaviorsListBlocks.containsKey(par1ItemStack))
+            if (!behaviorsListBlocks.containsKey(par1LandmineStack))
             {
-                behaviorsListBlocks.put(par1ItemStack, par2Behavior);
+                behaviorsListBlocks.put(par1LandmineStack, par2Behavior);
             }
         }
         else
         {
-            if (!behaviorsListItems.containsKey(par1ItemStack))
+            if (!behaviorsListItems.containsKey(par1LandmineStack))
             {
-                behaviorsListItems.put(par1ItemStack, par2Behavior);
+                behaviorsListItems.put(par1LandmineStack, par2Behavior);
             }
         }
     }
@@ -139,7 +158,7 @@ public abstract class Behavior
     {
     }
 
-    //Will return false if the effect does not stack among the slots
+    // Will return false if the effect does not stack among the slots
     public boolean effectStacks ()
     {
         return true;

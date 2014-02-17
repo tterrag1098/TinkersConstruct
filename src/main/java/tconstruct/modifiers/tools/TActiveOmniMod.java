@@ -59,7 +59,7 @@ public class TActiveOmniMod extends ActiveToolMod
         World world = entity.worldObj;
         Block block = entity.worldObj.getBlock(x, y, z);
         int meta = world.getBlockMetadata(x, y, z);
-        //TODO do we need the next to lines????????
+        // TODO do we need the next to lines????????
         if (block == null)
             return false;
 
@@ -199,6 +199,7 @@ public class TActiveOmniMod extends ActiveToolMod
         return bonus;
     }
 
+    @Override
     public boolean doesCriticalHit (ToolCore tool, NBTTagCompound tags, NBTTagCompound toolTags, ItemStack stack, EntityLivingBase player, Entity entity)
     {
         if (tool == TRepo.cutlass && random.nextInt(10) == 0)

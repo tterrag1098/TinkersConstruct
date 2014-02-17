@@ -1,9 +1,5 @@
 package tconstruct.blocks.logic;
 
-import tconstruct.inventory.PartCrafterChestContainer;
-import tconstruct.inventory.PartCrafterContainer;
-import tconstruct.library.crafting.PatternBuilder;
-import tconstruct.library.util.IPattern;
 import mantle.blocks.abstracts.InventoryLogic;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -12,6 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import tconstruct.inventory.PartCrafterChestContainer;
+import tconstruct.inventory.PartCrafterContainer;
+import tconstruct.library.crafting.PatternBuilder;
+import tconstruct.library.util.IPattern;
 
 public class PartBuilderLogic extends InventoryLogic implements ISidedInventory
 {
@@ -38,10 +38,10 @@ public class PartBuilderLogic extends InventoryLogic implements ISidedInventory
         {
             for (int zPos = z - 1; zPos <= z + 1; zPos++)
             {
-                for (int yPos = y - 1; zPos <= y + 1; zPos++)
+                for (int yPos = y - 1; yPos <= y + 1; yPos++)
                 {
                     TileEntity tile = world.getTileEntity(xPos, yPos, zPos);
-                    if (tile != null && tile instanceof PatternChestLogic)
+                    if (tile != null && tile instanceof PatternChestLogic && (x == xPos || z == zPos))
                         return new PartCrafterChestContainer(inventoryplayer, this, (PatternChestLogic) tile);
                 }
             }
@@ -50,6 +50,7 @@ public class PartBuilderLogic extends InventoryLogic implements ISidedInventory
     }
 
     //Called when emptying a slot, not when another item is placed in it
+    @Override
     public ItemStack decrStackSize (int slotID, int quantity)
     {
         ItemStack returnStack = super.decrStackSize(slotID, quantity);
@@ -111,6 +112,7 @@ public class PartBuilderLogic extends InventoryLogic implements ISidedInventory
     }
 
     //Called when a slot has something placed into it.
+    @Override
     public void setInventorySlotContents (int slot, ItemStack itemstack)
     {
         super.setInventorySlotContents(slot, itemstack);
@@ -149,6 +151,7 @@ public class PartBuilderLogic extends InventoryLogic implements ISidedInventory
     }
 
     /* NBT */
+    @Override
     public void readFromNBT (NBTTagCompound tags)
     {
         super.readFromNBT(tags);
@@ -156,6 +159,7 @@ public class PartBuilderLogic extends InventoryLogic implements ISidedInventory
         craftedBottom = tags.getBoolean("CraftedBottom");
     }
 
+    @Override
     public void writeToNBT (NBTTagCompound tags)
     {
         super.writeToNBT(tags);

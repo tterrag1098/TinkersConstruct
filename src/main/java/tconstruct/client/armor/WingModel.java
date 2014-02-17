@@ -24,16 +24,17 @@ public class WingModel extends ModelBase
         textureWidth = 64;
         textureHeight = 64;
 
-        //Right Wing
+        // Right Wing
         WingBaseRight = new ModelRenderer(this, 0, 41);
         WingBaseRight.addBox(-0.5F, -1F, 0F, 1, 2, 10);
         WingBaseRight.setRotationPoint(-1F, 1F, 0F);
         setRotation(WingBaseRight, 0.5235988F, -0.5235988F, 0F);
 
-        WingEdgeRight = new ModelRenderer(this, 0, 53); //Texture position
-        WingEdgeRight.addBox(0F, 0F, -2F, 1, 9, 2); //Offset, Size
-        WingEdgeRight.setRotationPoint(-0.502F, -1F, 10F); //Negative x, y - 1, Position
-        setRotation(WingEdgeRight, 0.5235988F, 0F, 0F); //Angle in radians
+        WingEdgeRight = new ModelRenderer(this, 0, 53); // Texture position
+        WingEdgeRight.addBox(0F, 0F, -2F, 1, 9, 2); // Offset, Size
+        WingEdgeRight.setRotationPoint(-0.502F, -1F, 10F); // Negative x, y - 1,
+                                                           // Position
+        setRotation(WingEdgeRight, 0.5235988F, 0F, 0F); // Angle in radians
 
         WingInsetRight = new ModelRenderer(this, 6, 53);
         WingInsetRight.addBox(0F, 0F, -1F, 1, 9, 2);
@@ -61,7 +62,7 @@ public class WingModel extends ModelBase
         WingBaseRight.addChild(WingFlangeRight);
         WingBaseRight.addChild(WingAuxRight);
 
-        //Left Wing
+        // Left Wing
         WingBaseLeft = new ModelRenderer(this, 42, 41);
         WingBaseLeft.addBox(-0.5F, -1F, 0F, 1, 2, 10);
         WingBaseLeft.setRotationPoint(1F, 1F, 0F);
@@ -99,6 +100,7 @@ public class WingModel extends ModelBase
         WingBaseLeft.addChild(WingAuxLeft);
     }
 
+    @Override
     public void render (Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
@@ -114,6 +116,7 @@ public class WingModel extends ModelBase
         model.rotateAngleZ = z;
     }
 
+    @Override
     public void setRotationAngles (float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);

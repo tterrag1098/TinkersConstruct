@@ -41,22 +41,26 @@ public class ExplosivePrimed extends Entity
         this.tntPlacedBy = par8EntityLivingBase;
     }
 
+    @Override
     protected void entityInit ()
     {
     }
 
     /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
-     * prevent them from trampling crops
+     * returns if this entity triggers Block.onEntityWalking on the blocks they
+     * walk on. used for spiders and wolves to prevent them from trampling crops
      */
+    @Override
     protected boolean canTriggerWalking ()
     {
         return false;
     }
 
     /**
-     * Returns true if other Entities should be prevented from moving through this Entity.
+     * Returns true if other Entities should be prevented from moving through
+     * this Entity.
      */
+    @Override
     public boolean canBeCollidedWith ()
     {
         return !this.isDead;
@@ -65,6 +69,7 @@ public class ExplosivePrimed extends Entity
     /**
      * Called to update the entity's position/logic.
      */
+    @Override
     public void onUpdate ()
     {
         this.prevPosX = this.posX;
@@ -111,12 +116,13 @@ public class ExplosivePrimed extends Entity
         explosion.isSmoking = true;
         explosion.doExplosionA();
         explosion.doExplosionB(true);
-        //return explosion;
+        // return explosion;
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
+    @Override
     protected void writeEntityToNBT (NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setByte("Fuse", (byte) this.fuse);
@@ -125,11 +131,13 @@ public class ExplosivePrimed extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     protected void readEntityFromNBT (NBTTagCompound par1NBTTagCompound)
     {
         this.fuse = par1NBTTagCompound.getByte("Fuse");
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public float getShadowSize ()
     {

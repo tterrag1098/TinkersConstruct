@@ -16,8 +16,10 @@ import net.minecraft.util.EnumFacing;
 final class BehaviorDispenseArmorCopy extends BehaviorDefaultDispenseItem
 {
     /**
-     * Dispense the specified stack, play the dispense sound and spawn particles.
+     * Dispense the specified stack, play the dispense sound and spawn
+     * particles.
      */
+    @Override
     protected ItemStack dispenseStack (IBlockSource par1IBlockSource, ItemStack par2ItemStack)
     {
         EnumFacing enumfacing = BlockDispenser.func_149937_b(par1IBlockSource.getBlockMetadata());
@@ -34,7 +36,17 @@ final class BehaviorDispenseArmorCopy extends BehaviorDefaultDispenseItem
             int i1 = EntityLiving.getArmorPosition(par2ItemStack);
             ItemStack itemstack1 = par2ItemStack.copy();
             itemstack1.stackSize = 1;
-            entitylivingbase.setCurrentItemOrArmor(i1, itemstack1); //BUGFIX Forge: Vanilla bug fix associated with fixed setCurrentItemOrArmor indexs for players.
+            entitylivingbase.setCurrentItemOrArmor(i1, itemstack1); // BUGFIX
+                                                                    // Forge:
+                                                                    // Vanilla
+                                                                    // bug fix
+                                                                    // associated
+                                                                    // with
+                                                                    // fixed
+                                                                    // setCurrentItemOrArmor
+                                                                    // indexs
+                                                                    // for
+                                                                    // players.
 
             if (entitylivingbase instanceof EntityLiving)
             {

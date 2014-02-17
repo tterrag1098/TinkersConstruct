@@ -18,6 +18,7 @@ public class SmelteryDrainLogic extends MultiServantLogic implements IFluidHandl
 {
     byte direction;
 
+    @Override
     public boolean canUpdate ()
     {
         return false;
@@ -69,13 +70,13 @@ public class SmelteryDrainLogic extends MultiServantLogic implements IFluidHandl
     public boolean canFill (ForgeDirection from, Fluid fluid)
     {
         return true;
-        //return from == getForgeDirection();//.getOpposite();
+        // return from == getForgeDirection();//.getOpposite();
     }
 
     @Override
     public boolean canDrain (ForgeDirection from, Fluid fluid)
     {
-        // Check that the drain is coming from the from the front of the block 
+        // Check that the drain is coming from the from the front of the block
         // and that the fluid to be drained is in the smeltery.
         boolean containsFluid = fluid == null;
         if (fluid != null)
@@ -90,7 +91,7 @@ public class SmelteryDrainLogic extends MultiServantLogic implements IFluidHandl
                 }
             }
         }
-        //return from == getForgeDirection().getOpposite() && containsFluid;
+        // return from == getForgeDirection().getOpposite() && containsFluid;
         return containsFluid;
     }
 
@@ -101,7 +102,7 @@ public class SmelteryDrainLogic extends MultiServantLogic implements IFluidHandl
         {
             SmelteryLogic smeltery = (SmelteryLogic) worldObj.getTileEntity(getMasterPosition().x, getMasterPosition().y, getMasterPosition().z);
             return smeltery.getMultiTankInfo();
-            //return new FluidTankInfo[] { smeltery.getInfo() };
+            // return new FluidTankInfo[] { smeltery.getInfo() };
         }
         return null;
     }
@@ -155,6 +156,7 @@ public class SmelteryDrainLogic extends MultiServantLogic implements IFluidHandl
         }
     }
 
+    @Override
     public void readFromNBT (NBTTagCompound tags)
     {
         super.readFromNBT(tags);
